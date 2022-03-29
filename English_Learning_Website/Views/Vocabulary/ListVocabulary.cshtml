@@ -1,0 +1,69 @@
+﻿@model PagedList.IPagedList<English_Learning_Website.Models.Vocabulary>
+@using PagedList.Mvc;
+@using PagedList;
+@{
+    ViewBag.Title = "List Vocabularies";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+    <br />
+    <div class="input-group">
+        @Html.ActionLink("Create New", "CreateV", "Vocabulary", new { @class = "btn btn-default" })
+        <input type="text" id="search-vocabulary" class="form-control pull-right" placeholder="Type keyword ..." />
+        <span class="input-group-addon">
+            <i class="glyphicon glyphicon-search"></i>
+        </span>
+    </div>
+    <br />
+    <table class="table-hover table table-responsive tr">
+        <caption class="caption">List Vocabularies</caption>
+        <tr>
+            <th>Number</th>
+            <th>Vocabulary Image</th>
+            <th>English Name</th>
+            <th>Vietnamese Name</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr class="search-list">
+                <td>@item.Vocabulary_Code</td>
+                <td><img src="~/Content/images/@item.Vocabulary_Image" style="width:50px;height:50px;" /></td>
+                <td>@item.Vocabulary_English</td>
+                <td>@item.Vocabulary_Vietnamese</td>
+                <td>
+                    @Html.ActionLink("Edit", "EditV", new { id = item.Vocabulary_Code }) |
+                    @Html.ActionLink("Detail", "DetailV", new { id = item.Vocabulary_Code }) |
+                    @Html.ActionLink("Delete", "DeleteV", new { id = item.Vocabulary_Code })
+                </td>
+            </tr>
+        }
+    </table>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function Check(name1, name2) {
+                if (name1.indexOf(name2) != -1) {
+                    return true;
+                }
+            }
+            $("#search-vocabulary").keyup(function () {
+                var searchResult = $("#search-vocabulary").val();
+                $(".search-list").each(function () {
+                    if (Check($(this).text().toLowerCase(), searchResult.toLowerCase())) {
+                        $(this).show();
+                    }
+                    else {
+                        $(this).hide();
+                    }
+                });
+            });
+        });
+    </script>
+    <div>
+        <div>
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+        </div>
+        <div>
+            @Html.PagedListPager(Model, page => Url.Action("ListVocabulary", new { page = page }))
+        </div>
+    </div>

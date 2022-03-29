@@ -1,0 +1,67 @@
+﻿@model English_Learning_Website.Models.Story
+@{
+    ViewBag.Title = "DeleteS";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<h2>DeleteS</h2>
+<hr />
+@using (Html.BeginForm("DeleteSS", "Story", FormMethod.Post))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div>
+        <img src="~/Content/images/@Model.Story_banner" id="pictureUpload" style="width: 100%; height: 60vh;" alt="Story Banner" />
+        <br />
+        @Html.EditorFor(model => model.Story_banner, "", new { htmlAttributes = new { @class = "form-control center-block", @placeholder = "Type image string ...", @style = "width:500px;height:200px;display:none;", @maxlength = "50" } })
+        <br />
+        <p>@Html.ValidationMessageFor(model => model.Story_banner, "", new { @class = "text-danger" })</p>
+    </div>
+    <div class="thumbnail">
+        <img src="~/Content/images/@Model.Story_image" id="pictureUpload1" style="width: 200px; height: 200px;" alt="Story Image" />
+        <br />
+        @Html.EditorFor(model => model.Story_image, "", new { htmlAttributes = new { @class = "form-control center-block", @placeholder = "Type image string ...", @style = "width:500px;height:200px;display:none;", @maxlength = "50" } })
+        <br />
+        <p>@Html.ValidationMessageFor(model => model.Story_image, "", new { @class = "text-danger" })</p>
+    </div>
+    <div class="form-group">
+        @Html.EditorFor(model => model.Story_Code, new { htmlAttributes = new { @class = "form-control", @style = "display:none;" } })
+        <p><strong>@Html.LabelFor(model => model.Story_Name)</strong> @Html.EditorFor(model => model.Story_Name, new { htmlAttributes = new { @class = "form-control" } })</p>
+        <p>@Html.ValidationMessageFor(model => model.Story_Name, "", new { @class = "text-danger" })</p>
+        <p><strong>@Html.LabelFor(model => model.Story_Content_EN)</strong> @Html.EditorFor(model => model.Story_Content_EN, new { htmlAttributes = new { @class = "form-control" } })</p>
+        <p>@Html.ValidationMessageFor(model => model.Story_Content_EN, "", new { @class = "text-danger" })</p>
+        <p><strong>@Html.LabelFor(model => model.Story_Content_VN)</strong> @Html.EditorFor(model => model.Story_Content_VN, new { htmlAttributes = new { @class = "form-control" } })</p>
+        <p>@Html.ValidationMessageFor(model => model.Story_Content_VN, "", new { @class = "text-danger" })</p>
+        <p><strong>@Html.LabelFor(model => model.Story_Audio)</strong> @Html.EditorFor(model => model.Story_Audio, new { htmlAttributes = new { @class = "form-control" } })</p>
+        <p>@Html.ValidationMessageFor(model => model.Story_Audio, "", new { @class = "text-danger" })</p>
+    </div>
+    <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete">Delete</a>
+    <div class="modal fade " id="delete">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="form-group">
+                        <h2 class="modal-title">Delete<button type="button" class="close pull-right" data-dismiss="modal">x</button></h2>
+                    </div>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to delete this ?
+                </div>
+                <div class="modal-footer">
+                    <div class="btn-group">
+                        <p>
+                            <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                            @Html.ActionLink("Delete", "DeleteSS", "Story", new { id = Model.Story_Code }, new { @class = "btn btn-danger" })
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+
+

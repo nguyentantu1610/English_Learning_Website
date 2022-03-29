@@ -1,0 +1,72 @@
+﻿@model PagedList.IPagedList<English_Learning_Website.Models.Vocabulary>
+@using PagedList.Mvc;
+@using PagedList;
+@{
+    ViewBag.Title = "User_View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Learn Vocabulary</h2>
+<div class="input-group">
+    <input type="text" id="search-vocabulary" class="form-control pull-right" placeholder="Type keyword ..." />
+    <span class="input-group-addon">
+        <i class="glyphicon glyphicon-search "></i>
+    </span>
+</div>
+<hr />
+<p>Choose vocabulary type that you want to see :</p>
+<div>
+    <a href="/Vocabulary/User_View" class="btn btn-default">Show All</a>
+@using English_Learning_Website.Models
+@{ 
+    List<Vocabulary_Type> vocabularies = Session["Index"] as List<Vocabulary_Type>;
+}
+    @foreach (var item in vocabularies)
+    {
+        <a href="/Vocabulary/User_View/@item.Vocabulary_Type_Code" class="btn btn-default">@item.Vocabulary_Type_EN_Name</a>
+    }
+</div>
+<hr />
+<div class="a2">
+    @foreach (var item in Model)
+    {
+        <div class="column" style="border-radius:0;">
+            <div class="card search-list">
+                <img src="~/Content/images/@item.Vocabulary_Image" alt="Vocabulary Image" style="width:100%;height:250px;" />
+                <h1 style="text-align:center;" class="myhover">@item.Vocabulary_English</h1>
+                <p style="color:gray;">/ @item.Vocabulary_Vietnamese /</p>
+                <p style="padding:10px;width:100%;background-color:#333333;color:white;font-size:14px;"><a href="/Vocabulary/DetailV/@item.Vocabulary_Code" style="color:white;">Detail</a></p>
+            </div>
+        </div>
+    }
+</div>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        function Check(name1, name2) {
+            if (name1.indexOf(name2) != -1) {
+                return true;
+            }
+        }
+        $("#search-vocabulary").keyup(function () {
+            var searchResult = $("#search-vocabulary").val();
+            $(".search-list").each(function () {
+                if (Check($(this).text().toLowerCase(), searchResult.toLowerCase())) {
+                    $(this).show();
+                }
+                else {
+                    $(this).hide();
+                }
+            });
+        });
+    });
+</script>
+<div>
+    <div>
+        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+    </div>
+    <div>
+        @Html.PagedListPager(Model, page => Url.Action("User_View", new { page = page }))
+    </div>
+</div>
+
+

@@ -1,0 +1,121 @@
+﻿@model English_Learning_Website.Models.StoryBonus
+@{
+    ViewBag.Title = "CreateS";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    .text-danger {
+        color:red;
+    }
+</style>
+<h2>CreateS</h2>
+<hr />
+@using (Html.BeginForm("CreateS", "Story", FormMethod.Post))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div>
+        <input type="file" name="fileUpload" id="fileUpload" accept="images/*" style="display:none;" />
+        <img src="~/Content/images/@Model.Story_banner" id="pictureUpload" style="width: 100%; height: 60vh;" alt="Story Banner" />
+        <br />
+        @Html.EditorFor(model => model.Story_banner, "", new { htmlAttributes = new { @class = "form-control center-block", @placeholder = "Type image string ...", @style = "width:500px;height:200px;display:none;", @maxlength = "50" } })
+        <br />
+        <p><input type="button" id="btnUpload" value="Choose Banner" class="btn btn-success center-block" /></p>
+        <p>@Html.ValidationMessageFor(model => model.Story_banner, "", new { @class = "text-danger" })</p>
+    </div>
+    @section upload
+    {
+        <script>
+            $(function () {
+                $('#btnUpload').click(function () {
+                    $('#fileUpload').trigger('click');
+                });
+            });
+            $('#fileUpload').change(function () {
+                if (window.FormData !== undefined) {
+                    var fileUpload = $('#fileUpload').get(0);
+                    var files = fileUpload.files;
+                    var formData = new FormData();
+                    formData.append('file', files[0]);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Story/ProcessUpload',
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (urlImage) {
+                            $('#pictureUpload').attr('src', "/Content/images/" + urlImage);
+                            $('#Story_banner').val(urlImage);
+                        },
+                        error: function (err) {
+                            alert('Error', err.statusText);
+                        }
+                    });
+                }
+            });
+        </script>
+    }
+    <div class="thumbnail">
+        <input type="file" name="fileUpload" id="fileUpload1" accept="images/*" style="display:none;" />
+        <img src="~/Content/images/@Model.Story_image" id="pictureUpload1" style="width: 200px; height: 200px;" alt="Story Image" />
+        <br />
+        @Html.EditorFor(model => model.Story_image, "", new { htmlAttributes = new { @class = "form-control center-block", @placeholder = "Type image string ...", @style = "width:500px;height:200px;display:none;", @maxlength = "50" } })
+        <br />
+        <p><input type="button" id="btnUpload1" value="Choose Image" class="btn btn-success center-block" /></p>
+    </div>
+    @section upload1
+    {
+        <script>
+            $(function () {
+                $('#btnUpload1').click(function () {
+                    $('#fileUpload1').trigger('click');
+                });
+            });
+            $('#fileUpload1').change(function () {
+                if (window.FormData !== undefined) {
+                    var fileUpload = $('#fileUpload1').get(0);
+                    var files = fileUpload.files;
+                    var formData = new FormData();
+                    formData.append('file', files[0]);
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Story/ProcessUpload',
+                        contentType: false,
+                        processData: false,
+                        data: formData,
+                        success: function (urlImage) {
+                            $('#pictureUpload1').attr('src', "/Content/images/" + urlImage);
+                            $('#Story_image').val(urlImage);
+                        },
+                        error: function (err) {
+                            alert('Error', err.statusText);
+                        }
+                    });
+                }
+            });
+        </script>
+    }
+<div class="form-group">
+    <p>
+        <strong>@Html.LabelFor(model => model.Story_Name)</strong> @Html.ValidationMessageFor(model => model.Story_Name, "", new { @class = "text-danger" })
+        @Html.EditorFor(model => model.Story_Name, new { htmlAttributes = new { @class = "form-control", } })
+    </p>
+    <p>
+        <strong>@Html.LabelFor(model => model.Story_Content_EN)</strong> @Html.ValidationMessageFor(model => model.Story_Content_EN, "", new { @class = "text-danger" })
+        @Html.EditorFor(model => model.Story_Content_EN, new { htmlAttributes = new { @class = "form-control" } })
+    </p>
+    <p>
+        <strong>@Html.LabelFor(model => model.Story_Content_VN)</strong> @Html.ValidationMessageFor(model => model.Story_Content_VN, "", new { @class = "text-danger" })
+        @Html.EditorFor(model => model.Story_Content_VN, new { htmlAttributes = new { @class = "form-control" } })
+    </p>
+    <p>
+        <strong>@Html.LabelFor(model => model.Story_Audio)</strong> @Html.ValidationMessageFor(model => model.Story_Audio, "", new { @class = "text-danger" })
+        @Html.EditorFor(model => model.Story_Audio, new { htmlAttributes = new { @class = "form-control" } })
+    </p>
+    <p><input type="text" id="Userz_Code" name="Userz_Code" class="form-control text-box single-line" value="@Session["Admin_Code"]" style="display:none;" /></p>
+</div>
+<input type="submit" value="Save" name="CreateS" class="btn btn-success" />
+}
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>

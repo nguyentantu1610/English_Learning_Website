@@ -1,0 +1,91 @@
+﻿@model English_Learning_Website.Models.Vocabulary_TypeBonus
+@{
+    ViewBag.Title = "List Vocabulary Categories";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<style>
+    .tr:hover > tr {
+        background-color: #d6eeee;
+    }
+</style>
+<br />
+<div>
+    <a href="#" class="btn btn-default" data-toggle="modal" data-target="#create-category">Create New</a>
+</div>
+
+<br />
+<table class="table table-responsive tr">
+    <caption class="caption">List vocabulary categories</caption>
+    <tr>
+        <th>Number</th>
+        <th>Category Name</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.vocabulary_Types)
+    {
+        <tr>
+            <td>@item.Vocabulary_Type_Code</td>
+            <td>@item.Vocabulary_Type_EN_Name</td>
+            <td>
+                @Html.ActionLink("Edit", "EditVT", new { id = item.Vocabulary_Type_Code }) |
+                <a href="/Vocabulary/DeleteVT/@item.Vocabulary_Type_Code">Delete</a>
+            </td>
+        </tr>
+    }
+</table>
+<div class="modal fade " id="create-category">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="form-group">
+                    <h2 class="modal-title">Create New Category<button type="button" class="close pull-right" data-dismiss="modal">x</button></h2>
+                </div>
+            </div>
+            <div class="modal-body">
+                <form id="create">
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <p>
+                        <strong>Category Name : </strong>
+                    </p>
+                    @Html.EditorFor(model => model.Vocabulary_Type_EN_Name, new { htmlAttributes = new { @class = "form-control center-block", @placeholder = "Type vocabulary category name ...", @style = "width:100%;max-width:100%;", @maxlength = "20" } })
+                </form>
+            </div>
+            <div class="modal-footer">
+                <div class="btn-group">
+                    <p>
+                        <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                        <a href="#" class="btn btn-primary" id="btn-save">Add</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section add
+{
+    <script>
+        $(document).ready(function () {
+            $("#btn-save").click(function () {
+                var category = $("#create").serialize();
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Vocabulary/CreateVT",
+                    data: category,
+                    success: function () {
+                        window.location.href = "/Vocabulary/ListVocabularyType";
+                    },
+                    error: function () {
+                        alert('This category already existed!');
+                    }
+                })
+            })
+        })
+    </script>
+}
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap.min.js"></script>

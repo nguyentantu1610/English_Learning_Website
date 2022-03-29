@@ -1,0 +1,14 @@
+﻿@model IEnumerable<English_Learning_Website.Models.Vocabulary_Type>
+@{
+    ViewBag.Title = "Choose_Quiz";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Choose_Quiz</h2>
+<div class="mydiv center-block">
+    @foreach(var item in Model)
+            {
+                <div style="padding:16px;background-color:black;width:100%;max-width:100%;border-radius:16px;text-align:center;"><a href="/Quiz/Do_Quiz/@item.Vocabulary_Type_Code" style="color:white;text-decoration:none;">@item.Vocabulary_Type_EN_Name</a></div>
+                <br />
+            }
+</div>
+

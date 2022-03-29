@@ -1,0 +1,109 @@
+﻿@model English_Learning_Website.Models.Userz
+@{
+    ViewBag.Title = "Account";
+    if (Session["User_Code"] != null)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    if (Session["Admin_Code"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
+}
+
+@using (Html.BeginForm("Account", "Home", FormMethod.Post))
+{
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="row">
+        <div class="myleft">
+            <input type="file" name="fileUpload" id="fileUpload" accept="images/*" style="display:none;" />
+            <img src="~/Content/images/@Model.User_Image" id="pictureUpload" style="width: 50%; height: 65vh; margin-top: 14.7%; border-radius: 6px; margin-left:25%" />
+            <br />
+            @Html.EditorFor(model => model.User_Image, "", new { htmlAttributes = new { @class = "form-control center-block a", @placeholder = "Type string image ...", @style = "width:500px;height:200px;display:none;" } })
+            <br />
+            <p><input type="button" id="btnUpload" value="Choose" class="btn btn-success center-block a" disabled /></p>
+            @section upload
+    {
+                <script>
+                $(function () {
+                    $('#btnUpload').click(function () {
+                        $('#fileUpload').trigger('click');
+                    });
+                });
+                $('#fileUpload').change(function () {
+                    if (window.FormData !== undefined) {
+                        var fileUpload = $('#fileUpload').get(0);
+                        var files = fileUpload.files;
+                        var formData = new FormData();
+                        formData.append('file', files[0]);
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Home/ProcessUpload',
+                            contentType: false,
+                            processData: false,
+                            data: formData,
+                            success: function (urlImage) {
+                                $('#pictureUpload').attr('src', "/Content/images/" + urlImage);
+                                $('#User_Image').val(urlImage);
+                            },
+                            error: function (err) {
+                                alert('Error', err.statusText);
+                            }
+                        });
+                    }
+                });
+                </script>
+            }
+        </div>
+        <div class="myright mydiv">
+            <p><strong>FullName : </strong> @Html.ValidationMessageFor(model => model.User_FullName, "", new { @class = "text-danger" })</p>
+            @Html.EditorFor(model => model.User_FullName, "", new { htmlAttributes = new { @class = "form-control center-block a", @placeholder = "Type your full name ...", @style = "width:100%;max-width:100%;", @maxlength = "35", @disabled = "true" } })
+            <br />
+            <p><strong>Gmail : </strong> @Html.ValidationMessageFor(model => model.User_Mail, "", new { @class = "text-danger" })</p>
+            @Html.EditorFor(model => model.User_Mail, new { htmlAttributes = new { @class = "form-control center-block a", @placeholder = "Type your gmail ...", @style = "width:100%;max-width:100%;", @maxlength = "30", @disabled = "true" } })
+            <br />
+            <p><strong>Phone Number : </strong> @Html.ValidationMessageFor(model => model.User_PhoneNumber, "", new { @class = "text-danger" })</p>
+            @Html.EditorFor(model => model.User_PhoneNumber, new { htmlAttributes = new { @class = "form-control center-block a", @placeholder = "Type your phone number ...", @style = "width:100%;max-width:100%;", @maxlength = "10", @type = "number", @disabled = "true" } })
+            <br />
+            <p><strong>Gender : </strong> @Html.ValidationMessageFor(model => model.User_Gender, "", new { @class = "text-danger" })</p>
+            <select id="User_Gender" name="User_Gender" class="form-control center-block a" style="width:100%;max-width:100%;" disabled>
+                <option for="User_Gender" id="User_Gender" name="User_Gender" selected>@Html.ValueFor(model => model.User_Gender)</option>
+                <option for="User_Gender" id="User_Gender" name="User_Gender" value="Male">Male</option>
+                <option for="User_Gender" id="User_Gender" name="User_Gender" value="Female">Female</option>
+                <option for="User_Gender" id="User_Gender" name="User_Gender" value="Other">Other</option>
+            </select>
+            <br />
+            <p><strong>Date of birth : </strong> @Html.ValidationMessageFor(model => model.User_Birthday, "", new { @class = "text-danger" })</p>
+            @Html.EditorFor(model => model.User_Birthday, new { htmlAttributes = new { @class = "form-control center-block a", @placeholder = "Type your birthday ...", @style = "width:100%;max-width:100%;", @type = "datetime", @maxlength = "10", @disabled = "true" } })
+            <br />
+            <p>
+                <input type="button" onclick="myfunction()" value="Change" class="btn btn-info pull-left" id="b" style="width: 45%; border-radius: 16px; " />
+                <input type="submit" name="Account" onclick="myfunction()" value="Save" class="btn btn-success pull-right a" style="width: 45%; border-radius: 16px;" disabled />
+            </p>
+            <br />
+            <br />
+            <p>@Html.ActionLink("Back", "HomePage", "Home", new { @class = "btn btn-default center-block", @style = "width:100%;max-width:100%;border-radius:16px;" })</p>
+        </div>
+    </div>
+    <script>
+    function myfunction() {
+        if (document.getElementById("b").disabled == true) {
+            document.getElementById("b").disabled = false;
+        }
+        else {
+            document.getElementById("b").disabled = true;
+            var x = document.getElementsByClassName("a");
+            for (var i = 0; i < x.length; i++) {
+                x[i].disabled = false;
+            }
+        }
+    }
+    </script>
+}
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+
+
+

@@ -1,0 +1,19 @@
+﻿@model English_Learning_Website.Models.Vocabulary
+@{
+    ViewBag.Title = "Continue";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm("Check_Answer", "Quiz", FormMethod.Post))
+{
+    @Html.EditorFor(model => model.Vocabulary_Code, "", new { htmlAttributes = new { @class = "form-control center-block", @style = "width:100%;max-width:100%;display:none;" } })
+    <div class="thumbnail">
+        <img src="~/Content/images/@Model.Vocabulary_Image" alt="Vocabulary Image" style="width:250px;height:250px;" />
+    </div>
+    <font style="color:red;">@ViewData["Correct"]</font>
+    <div class="text-center">
+        <label>Type your answer in the text-box : </label> <input type="text" id="answer" name="answer" class="form-control" style="width:30%;max-width:30%;display:inline-block" placeholder="Type your answer ..." maxlength="30" data-val="true" data-val-required=" Please enter your answer " autofocus /> <input type="submit" value="Next" class="btn btn-info" />
+    </div>
+
+}
+

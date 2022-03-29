@@ -1,0 +1,41 @@
+﻿@model English_Learning_Website.Models.Vocabulary
+@{
+    ViewBag.Title = "DeleteV";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<h2>DeleteV</h2>
+    <div class="thumbnail">
+        <img src="~/Content/images/@Model.Vocabulary_Image" alt="Vocabulary Image" style="width:100px;height:100px;" />
+    </div>
+    <div class="text-center">
+        <p><strong>English Name : </strong>@Html.ValueFor(model => model.Vocabulary_English)</p>
+        <p><strong>Vietnamese Name : </strong>@Html.ValueFor(model => model.Vocabulary_Vietnamese)</p>
+        <p><strong>Pronunciation : </strong>@Html.ValueFor(model => model.Vocabulary_Pronunciation) @Html.ActionLink("Speech", "Speech", new { id = Model.Vocabulary_Code }, new { @class = "btn btn-default" })</p>
+        <p><strong>Description : </strong>@Html.ValueFor(model => model.Vocabulary_Description)</p>
+        <br />
+        <p>@Html.ActionLink("Back to List", "ListVocabulary", "", new { @class = "btn btn-default" }) <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#delete">Delete</a></p>
+    </div>
+    <div class="modal fade " id="delete">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="form-group">
+                        <h2 class="modal-title">Delete<button type="button" class="close pull-right" data-dismiss="modal">x</button></h2>
+                    </div>
+                </div>
+                    <div class="modal-body">
+                            Are you sure you want to delete this ?
+                    </div>
+                    <div class="modal-footer">
+                        <div class="btn-group">
+                            <p>
+                                <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+                                @Html.ActionLink("Delete", "DeleteVC", "Vocabulary", new { id = Model.Vocabulary_Code }, new { @class = "btn btn-danger" })
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
