@@ -18,40 +18,30 @@ namespace English_Learning_Website.Controllers
             List<Vocabulary_Type> vocabulary_Type = db.Vocabulary_Type.ToList();
             return View(vocabulary_Type);
         }
-        //public ActionResult Do_Quiz(int id, int? page)
-        //{
-        //    if (page == null) page = 1;
-        //    int pageSize = 3;
-        //    int pageNum = page ?? 1;
-        //    List<Vocabulary> vocabulary = db.Vocabularies.Where(s => s.Vocabulary_Type_Code == id).ToList();
-        //    if (vocabulary == null)
-        //    {
-        //        return RedirectToAction("Choose_Quiz", "Quiz");
-        //    }
-        //    else
-        //    {
-        //        return View(vocabulary.ToPagedList(pageNum, pageSize));
-        //    }
-        //}
         public ActionResult Do_Quiz(int id)
         {
-            Session["number"] = 0;
-            List<Vocabulary> vocabulary = db.Vocabularies.Where(s => s.Vocabulary_Type_Code == id).ToList();
-            if (vocabulary == null)
+            Session["Index_List"] = 0;
+            Session["No"] = 1;
+            Session["Quiz_Score"] = 0;
+            List<bool> save_Result = new List<bool>();
+            Session["save_Result"] = save_Result;
+            List<Vocabulary> vocabulary = db.Vocabularies.Where(s => s.Vocabulary_Type_Code == id).Take(10).ToList();
+            Session["Count_List"] = vocabulary.Count();
+            if (vocabulary == null || vocabulary.Count() < 10)
             {
                 return RedirectToAction("Choose_Quiz", "Quiz");
             }
             else
             {
-                return View(vocabulary[int.Parse(Session["number"].ToString())]);
+                return View(vocabulary[int.Parse(Session["Index_List"].ToString())]);
             }
         }
         [HttpPost]
         public ActionResult Check_Answer(Vocabulary vocabulary, string answer)
         {
-            int number = int.Parse(Session["number"].ToString());
-            number++;
-            Session["number"] = number;
+            List<bool> save_Result = Session["save_Result"] as List<bool>;
+            int index = int.Parse(Session["Index_List"].ToString());
+            int no = int.Parse(Session["No"].ToString());
             Vocabulary vocabulary1 = db.Vocabularies.FirstOrDefault(s => s.Vocabulary_Code == vocabulary.Vocabulary_Code);
             List<Vocabulary> vocabulary2 = db.Vocabularies.Where(s => s.Vocabulary_Type_Code == vocabulary1.Vocabulary_Type_Code).ToList();
             if (vocabulary1 == null)
@@ -60,12 +50,31 @@ namespace English_Learning_Website.Controllers
             }
             else
             {
-                if (vocabulary1.Vocabulary_English == answer)
+                if (vocabulary1.Vocabulary_English.ToLower().Trim() == answer.ToLower().Trim())
                 {
-                    ViewData["Correct"] = "Correct!";
+                    int quiz_Score = int.Parse(Session["Quiz_Score"].ToString());
+                    quiz_Score++;
+                    Session["Quiz_Score"] = quiz_Score;
+                    save_Result.Add(true);
                 }
-                Session["Vocabulary"] = vocabulary2[int.Parse(Session["number"].ToString())];
-                return RedirectToAction("Continue","Quiz");
+                else
+                {
+                    save_Result.Add(false);
+                }
+                index++;
+                Session["Index_List"] = index;
+                no++;
+                Session["No"] = no;
+                Session["save_Result"] = save_Result;
+                if (int.Parse(Session["No"].ToString()) > 10)
+                {
+                    return RedirectToAction("Result", "Quiz");
+                }
+                else
+                {
+                    Session["Vocabulary"] = vocabulary2[int.Parse(Session["Index_List"].ToString())];
+                    return RedirectToAction("Continue", "Quiz");
+                }
             }
         }
         public ActionResult Continue()
@@ -79,6 +88,10 @@ namespace English_Learning_Website.Controllers
                 Vocabulary vocabulary = Session["Vocabulary"] as Vocabulary;
                 return View(vocabulary);
             }
+        }
+        public ActionResult Result()
+        {
+            return View();
         }
     }
 }

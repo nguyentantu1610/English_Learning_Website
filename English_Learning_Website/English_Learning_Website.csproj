@@ -281,6 +281,7 @@
     <Content Include="Views\Quiz\Choose_Quiz.cshtml" />
     <Content Include="Views\Quiz\Do_Quiz.cshtml" />
     <Content Include="Views\Quiz\Continue.cshtml" />
+    <Content Include="Views\Quiz\Result.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
