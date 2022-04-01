@@ -13,7 +13,7 @@ namespace English_Learning_Website.Controllers
     public class StoryController : Controller
     {
         // GET: Story
-        English_Learning_WebsiteEntities1 db = new English_Learning_WebsiteEntities1();
+        English_Learning_WebsiteEntities2 db = new English_Learning_WebsiteEntities2();
         public ActionResult ListStory(int? page)
         {
             if (page == null) page = 1;

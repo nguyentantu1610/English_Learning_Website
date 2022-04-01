@@ -16,8 +16,56 @@ namespace English_Learning_Website.Controllers
     public class VocabularyController : Controller
     {
         // GET: Vocabulary
-        English_Learning_WebsiteEntities1 db = new English_Learning_WebsiteEntities1();
-        //List Vocabulary
+        English_Learning_WebsiteEntities2 db = new English_Learning_WebsiteEntities2();
+
+        //public ActionResult Index(string sortOrder)
+        //{
+        //    ViewBag.CodeSortParm = String.IsNullOrEmpty(sortOrder) ? "code_decs" : "";
+        //    ViewBag.TenTVSortParm = sortOrder == "tentv" ? "tentv_decs" : "Date";
+        //    var voca = db.Vocabularies.AsQueryable();
+        //    switch (sortOrder)
+        //    {
+        //        case "code_decs": 
+        //            voca = voca.OrderByDescending(s => s.Vocabulary_Code);
+        //            break;
+        //        case "tentv":
+        //            voca = voca.OrderBy(s => s.Vocabulary_English);
+        //            break;
+        //        case "tentv_decs":
+        //            voca = voca.OrderByDescending(s => s.Vocabulary_English);
+        //            break;
+        //        default:
+        //            voca = voca.OrderBy(s => s.Vocabulary_Code);
+        //            break;
+        //    }
+        //    return View(voca.ToList());
+        //}
+        public ActionResult Index(string sortOrder)
+        {
+            // 1. Thêm biến NameSortParm để biết trạng thái sắp xếp tăng, giảm ở View
+            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+
+            // 2. Truy vấn lấy tất cả đường dẫn
+            var voca = from l in db.Vocabularies
+                        select l;
+            // 3. Thứ tự sắp xếp theo thuộc tính LinkName
+            switch (sortOrder)
+            {
+                // 3.1 Nếu biến sortOrder sắp giảm thì sắp giảm theo LinkName
+                case "name_desc":
+                    voca = voca.OrderByDescending(s => s.Vocabulary_English);
+                    break;
+
+                // 3.2 Mặc định thì sẽ sắp tăng
+                default:
+                    voca = voca.OrderBy(s => s.Vocabulary_English);
+                    break;
+            }
+
+            // 4. Trả kết quả về Views
+            return View(voca.ToList());
+        }
+            //List Vocabulary
         public ActionResult ListVocabularyType()
         {
             List<Vocabulary_Type> vocabulary_Type = db.Vocabulary_Type.ToList();
@@ -155,7 +203,7 @@ namespace English_Learning_Website.Controllers
                     vocabulary.Vocabulary_Type_Code = vocabularyBonus.Vocabulary_Type_Code;
                     vocabulary.Vocabulary_English = vocabularyBonus.Vocabulary_English;
                     vocabulary.Vocabulary_Vietnamese = vocabularyBonus.Vocabulary_Vietnamese;
-                    vocabulary.Vocabulary_Description = vocabularyBonus.Vocabulary_Description;
+                    //vocabulary.Vocabulary_Description = vocabularyBonus.Vocabulary_Description;
                     vocabulary.Vocabulary_Pronunciation = vocabularyBonus.Vocabulary_Pronunciation;
                     if (vocabularyBonus.Vocabulary_Image != null)
                     {
@@ -198,7 +246,7 @@ namespace English_Learning_Website.Controllers
                 vocabularyBonus.Vocabulary_Image = vocabulary.Vocabulary_Image;
                 vocabularyBonus.Vocabulary_English = vocabulary.Vocabulary_English;
                 vocabularyBonus.Vocabulary_Vietnamese = vocabulary.Vocabulary_Vietnamese;
-                vocabularyBonus.Vocabulary_Description = vocabulary.Vocabulary_Description;
+                //vocabularyBonus.Vocabulary_Description = vocabulary.Vocabulary_Description;
                 vocabularyBonus.Vocabulary_Pronunciation = vocabulary.Vocabulary_Pronunciation;
                 vocabularyBonus.Vocabulary_Type_Code = vocabulary.Vocabulary_Type.Vocabulary_Type_Code;
                 List<Vocabulary_Type> vocabulary_Types = db.Vocabulary_Type.ToList();
@@ -221,7 +269,7 @@ namespace English_Learning_Website.Controllers
                     vocabulary.Vocabulary_Type_Code = vocabularyBonus.Vocabulary_Type_Code;
                     vocabulary.Vocabulary_English = vocabularyBonus.Vocabulary_English;
                     vocabulary.Vocabulary_Vietnamese = vocabularyBonus.Vocabulary_Vietnamese;
-                    vocabulary.Vocabulary_Description = vocabularyBonus.Vocabulary_Description;
+                    //vocabulary.Vocabulary_Description = vocabularyBonus.Vocabulary_Description;
                     vocabulary.Vocabulary_Pronunciation = vocabularyBonus.Vocabulary_Pronunciation;
                     vocabulary.Vocabulary_Image = vocabularyBonus.Vocabulary_Image;
                     db.Vocabularies.AddOrUpdate(vocabulary);

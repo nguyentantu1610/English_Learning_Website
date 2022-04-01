@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\NguyenTanTu\Documents\Do an Web\English_Learning_Website\English_Learning_Website\Models\EnglishLearning.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\KyThuat88\source\repos\English Learning Website\English_Learning_Website\Models\EnglishLearning.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

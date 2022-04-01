@@ -61,9 +61,9 @@
             <p><strong>Vietnamese Name : </strong> @Html.ValidationMessageFor(model => model.Vocabulary_Vietnamese, "", new { @class = "text-danger" })</p>
             @Html.EditorFor(model => model.Vocabulary_Vietnamese, new { htmlAttributes = new { @class = "form-control center-block", @placeholder = "Type vocabulary vietnamese name ...", @style = "width:100%;max-width:100%;", @maxlength = "30" } })
             <br />
-            <p><strong>Description : </strong> @Html.ValidationMessageFor(model => model.Vocabulary_Description, "", new { @class = "text-danger" })</p>
+            @*<p><strong>Description : </strong> @Html.ValidationMessageFor(model => model.Vocabulary_Description, "", new { @class = "text-danger" })</p>
             @Html.EditorFor(model => model.Vocabulary_Description, new { htmlAttributes = new { @class = "form-control center-block", @placeholder = "Type description ...", @style = "width:100%;max-width:100%;", @maxlength = "100" } })
-            <br />
+            <br />*@
             <p><strong>Pronunciation : </strong> @Html.ValidationMessageFor(model => model.Vocabulary_Pronunciation, "", new { @class = "text-danger" })</p>
             @Html.EditorFor(model => model.Vocabulary_Pronunciation, new { htmlAttributes = new { @class = "form-control center-block", @placeholder = "Type pronunciation ...", @style = "width:100%;max-width:100%;", @maxlength = "20" } })
             <br />

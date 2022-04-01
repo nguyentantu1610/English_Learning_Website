@@ -17,16 +17,16 @@ namespace English_Learning_Website.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Vocabulary_Type()
         {
-            this.Vocabularies = new HashSet<Vocabulary>();
             this.Quiz_Detail = new HashSet<Quiz_Detail>();
+            this.Vocabularies = new HashSet<Vocabulary>();
         }
     
         public int Vocabulary_Type_Code { get; set; }
         public string Vocabulary_Type_EN_Name { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Vocabulary> Vocabularies { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Quiz_Detail> Quiz_Detail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Vocabulary> Vocabularies { get; set; }
     }
 }

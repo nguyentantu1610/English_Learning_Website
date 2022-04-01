@@ -12,7 +12,7 @@ namespace English_Learning_Website.Controllers
     public class QuizController : Controller
     {
         // GET: Quiz abc
-        English_Learning_WebsiteEntities1 db = new English_Learning_WebsiteEntities1();
+        English_Learning_WebsiteEntities2 db = new English_Learning_WebsiteEntities2();
         public ActionResult Choose_Quiz()
         {
             List<Vocabulary_Type> vocabulary_Type = db.Vocabulary_Type.ToList();

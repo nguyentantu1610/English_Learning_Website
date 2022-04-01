@@ -64,9 +64,9 @@
             <p><strong>Description : </strong> @Html.ValidationMessageFor(model => model.Vocabulary_Description, "", new { @class = "text-danger" })</p>
             @Html.EditorFor(model => model.Vocabulary_Description, new { htmlAttributes = new { @class = "form-control center-block", @placeholder = "Type description ...", @style = "width:100%;max-width:100%;", @maxlength = "100" } })
             <br />
-            <p><strong>Pronunciation : </strong> @Html.ValidationMessageFor(model => model.Vocabulary_Pronunciation, "", new { @class = "text-danger" })</p>
+            @*<p><strong>Pronunciation : </strong> @Html.ValidationMessageFor(model => model.Vocabulary_Pronunciation, "", new { @class = "text-danger" })</p>
             @Html.EditorFor(model => model.Vocabulary_Pronunciation, new { htmlAttributes = new { @class = "form-control center-block", @placeholder = "Type pronunciation ...", @style = "width:100%;max-width:100%;", @maxlength = "20" } })
-            <br />
+            <br />*@
             <p><strong>Vocabulary Category : </strong> @Html.ValidationMessageFor(model => model.vocabulary_Types, "", new { @class = "text-danger" })</p>
             @Html.DropDownListFor(model => model.Vocabulary_Type_Code, new SelectList(Model.vocabulary_Types, "Vocabulary_Type_Code", "Vocabulary_Type_EN_Name"), "", new { @class = "form-control center-block pull-left", @style = "width:85%;max-width:100%;" }) <a href="#" class="btn btn-primary pull-right" data-toggle="modal" data-target="#create-category">Add</a>
             <br />

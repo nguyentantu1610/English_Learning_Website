@@ -13,7 +13,7 @@ namespace English_Learning_Website.Controllers
     public class LoginController : Controller
     {
         // GET: Login
-        English_Learning_WebsiteEntities1 db = new English_Learning_WebsiteEntities1();
+        English_Learning_WebsiteEntities2 db = new English_Learning_WebsiteEntities2();
         //Sign In
         public ActionResult SignIn()
         {

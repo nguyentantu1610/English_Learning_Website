@@ -13,10 +13,10 @@ namespace English_Learning_Website.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class English_Learning_WebsiteEntities1 : DbContext
+    public partial class English_Learning_WebsiteEntities2 : DbContext
     {
-        public English_Learning_WebsiteEntities1()
-            : base("name=English_Learning_WebsiteEntities1")
+        public English_Learning_WebsiteEntities2()
+            : base("name=English_Learning_WebsiteEntities2")
         {
         }
     
@@ -25,10 +25,10 @@ namespace English_Learning_Website.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<Quiz_Detail> Quiz_Detail { get; set; }
+        public virtual DbSet<Story> Stories { get; set; }
         public virtual DbSet<Userz> Userzs { get; set; }
         public virtual DbSet<Vocabulary> Vocabularies { get; set; }
         public virtual DbSet<Vocabulary_Type> Vocabulary_Type { get; set; }
-        public virtual DbSet<Story> Stories { get; set; }
-        public virtual DbSet<Quiz_Detail> Quiz_Detail { get; set; }
     }
 }

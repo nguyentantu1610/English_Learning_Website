@@ -4,16 +4,16 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="6f95b3d151ac4f5db761214bb2c3a71d" Name="Diagram1">
-        <EntityTypeShape EntityType="English_Learning_WebsiteModel.Userz" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="English_Learning_WebsiteModel.Vocabulary" Width="1.5" PointX="5.625" PointY="1" />
-        <EntityTypeShape EntityType="English_Learning_WebsiteModel.Vocabulary_Type" Width="1.5" PointX="3.375" PointY="1.375" />
-        <AssociationConnector Association="English_Learning_WebsiteModel.FK__Vocabular__Vocab__38996AB5" />
-        <EntityTypeShape EntityType="English_Learning_WebsiteModel.Story" Width="1.5" PointX="3" PointY="3.75" />
-        <AssociationConnector Association="English_Learning_WebsiteModel.FK__Story__Userz_Cod__49C3F6B7" />
-        <EntityTypeShape EntityType="English_Learning_WebsiteModel.Quiz_Detail" Width="1.5" PointX="5.625" PointY="4.375" />
-        <AssociationConnector Association="English_Learning_WebsiteModel.FK__Quiz_Deta__User___5CD6CB2B" />
-        <AssociationConnector Association="English_Learning_WebsiteModel.FK__Quiz_Deta__Vocab__5DCAEF64" />
+      <Diagram DiagramId="87231b98f0a34dcdbaaee26639345421" Name="Diagram1">
+        <EntityTypeShape EntityType="English_Learning_WebsiteModel.Quiz_Detail" Width="1.5" PointX="3" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="English_Learning_WebsiteModel.Story" Width="1.5" PointX="3" PointY="9.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="English_Learning_WebsiteModel.Userz" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="English_Learning_WebsiteModel.Vocabulary" Width="1.5" PointX="4.625" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="English_Learning_WebsiteModel.Vocabulary_Type" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
+        <AssociationConnector Association="English_Learning_WebsiteModel.FK__Quiz_Deta__User___3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="English_Learning_WebsiteModel.FK__Quiz_Deta__Vocab__3B75D760" ManuallyRouted="false" />
+        <AssociationConnector Association="English_Learning_WebsiteModel.FK__Story__Userz_Cod__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="English_Learning_WebsiteModel.FK__Vocabular__Vocab__59FA5E80" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

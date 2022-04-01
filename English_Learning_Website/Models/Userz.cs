@@ -17,8 +17,8 @@ namespace English_Learning_Website.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Userz()
         {
-            this.Stories = new HashSet<Story>();
             this.Quiz_Detail = new HashSet<Quiz_Detail>();
+            this.Stories = new HashSet<Story>();
         }
     
         public int User_Code { get; set; }
@@ -32,8 +32,8 @@ namespace English_Learning_Website.Models
         public string User_Image { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Story> Stories { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Quiz_Detail> Quiz_Detail { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Story> Stories { get; set; }
     }
 }
