@@ -14,13 +14,13 @@
         </span>
     </div>
     <br />
-    <table class="table-hover table table-responsive tr">
+    <table id="myTable" class="table-hover table table-responsive tr table-sm">
         <caption class="caption">List Vocabularies</caption>
         <tr>
             <th>Number</th>
             <th>Vocabulary Image</th>
-            <th>@Html.ActionLink("EnglishName", "Index", new { sortOrder = ViewBag.TenTVSortParm })</th>
-            <th>Vietnamese Name</th>
+            <th>@Html.ActionLink("EnglishName", "ListVocabulary", "Vocabulary", new { sortBy = ViewBag.EnglishNameSortParm })</th>
+            <th>@Html.ActionLink("VietnameseName", "ListVocabulary", "Vocabulary", new { sortBy = ViewBag.VietnameseNameSortParm })</th>
             <th></th>
         </tr>
         @foreach (var item in Model)

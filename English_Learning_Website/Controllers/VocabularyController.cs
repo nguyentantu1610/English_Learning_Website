@@ -40,32 +40,28 @@ namespace English_Learning_Website.Controllers
         //    }
         //    return View(voca.ToList());
         //}
-        public ActionResult Index(string sortOrder)
+        public ActionResult Index(string sortBy)
         {
-            // 1. Thêm biến NameSortParm để biết trạng thái sắp xếp tăng, giảm ở View
-            ViewBag.NameSortParm = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewBag.EnglishNameSortParm = string.IsNullOrEmpty(sortBy) ? "EName desc" : "";
+            ViewBag.VietnameseNameSortParm = string.IsNullOrEmpty(sortBy) ? "VName desc" : "";
 
-            // 2. Truy vấn lấy tất cả đường dẫn
-            var voca = from l in db.Vocabularies
-                        select l;
-            // 3. Thứ tự sắp xếp theo thuộc tính LinkName
-            switch (sortOrder)
+            var voca = from vocas in db.Vocabularies select vocas;
+
+            switch (sortBy)
             {
-                // 3.1 Nếu biến sortOrder sắp giảm thì sắp giảm theo LinkName
-                case "name_desc":
-                    voca = voca.OrderByDescending(s => s.Vocabulary_English);
+                case "EName desc":
+                    voca = voca.OrderByDescending(x => x.Vocabulary_English);
                     break;
-
-                // 3.2 Mặc định thì sẽ sắp tăng
+                case "VName desc":
+                    voca = voca.OrderByDescending(x => x.Vocabulary_Vietnamese);
+                    break;
                 default:
-                    voca = voca.OrderBy(s => s.Vocabulary_English);
+                    voca = voca.OrderBy(x => x.Vocabulary_English);
                     break;
             }
-
-            // 4. Trả kết quả về Views
             return View(voca.ToList());
         }
-            //List Vocabulary
+        //List Vocabulary
         public ActionResult ListVocabularyType()
         {
             List<Vocabulary_Type> vocabulary_Type = db.Vocabulary_Type.ToList();
