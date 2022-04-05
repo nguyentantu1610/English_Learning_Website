@@ -19,8 +19,8 @@
         <tr>
             <th>Number</th>
             <th>Vocabulary Image</th>
-            <th>@Html.ActionLink("EnglishName", "ListVocabulary", "Vocabulary", new { sortBy = ViewBag.EnglishNameSortParm })</th>
-            <th>@Html.ActionLink("VietnameseName", "ListVocabulary", "Vocabulary", new { sortBy = ViewBag.VietnameseNameSortParm })</th>
+            <th>@Html.ActionLink("EnglishName", "ListVocabulary", new { sortBy = ViewBag.EnglishNameSortParm })</th>
+            <th>@Html.ActionLink("VietnameseName", "ListVocabulary", new { sortBy = ViewBag.VietnameseNameSortParm })</th>
             <th></th>
         </tr>
         @foreach (var item in Model)

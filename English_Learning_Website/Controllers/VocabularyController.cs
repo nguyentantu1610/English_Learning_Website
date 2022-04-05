@@ -43,7 +43,7 @@ namespace English_Learning_Website.Controllers
         public ActionResult Index(string sortBy)
         {
             ViewBag.EnglishNameSortParm = string.IsNullOrEmpty(sortBy) ? "EName desc" : "";
-            ViewBag.VietnameseNameSortParm = string.IsNullOrEmpty(sortBy) ? "VName desc" : "";
+            ViewBag.VietnameseNameSortParm = sortBy == "VName" ? "VName desc" : "VName";
 
             var voca = from vocas in db.Vocabularies select vocas;
 
@@ -52,11 +52,11 @@ namespace English_Learning_Website.Controllers
                 case "EName desc":
                     voca = voca.OrderByDescending(x => x.Vocabulary_English);
                     break;
-                case "VName desc":
+                case "VName":
                     voca = voca.OrderByDescending(x => x.Vocabulary_Vietnamese);
                     break;
-                default:
-                    voca = voca.OrderBy(x => x.Vocabulary_English);
+                case "VName desc":
+                    voca = voca.OrderByDescending(x => x.Vocabulary_Vietnamese);
                     break;
             }
             return View(voca.ToList());
