@@ -1,0 +1,9 @@
+﻿.parralax {
+    background: url(../Content/images/learn1.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    height: 150px;
+    /*Add to this div height*/
+}
+
