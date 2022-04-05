@@ -12,7 +12,6 @@
     <p><strong>English Name : </strong>@Html.ValueFor(model => model.Vocabulary_English)</p>
     <p><strong>Vietnamese Name : </strong>@Html.ValueFor(model => model.Vocabulary_Vietnamese)</p>
     <p><strong>Pronunciation : </strong>@Html.ValueFor(model => model.Vocabulary_Pronunciation) @Html.ActionLink("Voice", "Speech", new { id = Model.Vocabulary_Code }, new { @class = "btn btn-default" })</p>
-    <p><strong>Description : </strong>@Html.ValueFor(model => model.Vocabulary_Description)</p>
 </div>
 <div>
     @Html.ActionLink("Back to List", "User_View", "Vocabulary", new { @class = "btn btn-default" })

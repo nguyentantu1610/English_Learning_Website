@@ -30,5 +30,9 @@ namespace English_Learning_Website.Models
         public virtual DbSet<Vocabulary_Type> Vocabulary_Type { get; set; }
         public virtual DbSet<Story> Stories { get; set; }
         public virtual DbSet<Quiz_Detail> Quiz_Detail { get; set; }
+        public virtual DbSet<Answer> Answers { get; set; }
+        public virtual DbSet<Question> Questions { get; set; }
+        public virtual DbSet<Test> Tests { get; set; }
+        public virtual DbSet<Test_Detail> Test_Detail { get; set; }
     }
 }

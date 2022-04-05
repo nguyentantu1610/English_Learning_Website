@@ -22,10 +22,6 @@ namespace English_Learning_Website.Models
         [Required(ErrorMessage = " Please enter vietnamese name ")]
         [MaxLength(30)]
         public string Vocabulary_Vietnamese { get; set; }
-        [DisplayName("Description : ")]
-        [Required(ErrorMessage = " Please enter description ")]
-        [MaxLength(100)]
-        public string Vocabulary_Description { get; set; }
         [DisplayName("Pronunciation : ")]
         [Required(ErrorMessage = " Please enter pronunciation ")]
         [MaxLength(20)]

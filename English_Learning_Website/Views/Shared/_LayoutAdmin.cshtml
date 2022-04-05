@@ -73,6 +73,7 @@
                     <li>@Html.ActionLink("Story", "ListStory", "Story")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li><img src="~/Content/images/@Session["User_Image"]" class="avatar" /></li>
                     <li><a href="/Home/Account">@Session["User_FullName"]</a></li>
                     <li class="pull-right">@Html.ActionLink("Logout", "Logout", "Home")</li>
                 </ul>

@@ -5,6 +5,27 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="English_Learning_WebsiteModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="Answer_Code" />
+          </Key>
+          <Property Name="Answer_Code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Answer_Content1" Type="varchar" MaxLength="50" />
+          <Property Name="Answer_Content2" Type="varchar" MaxLength="50" />
+          <Property Name="Answer_Content3" Type="varchar" MaxLength="50" />
+          <Property Name="Answer_Content4" Type="varchar" MaxLength="50" />
+          <Property Name="Answer_Correct" Type="varchar" MaxLength="50" />
+          <Property Name="Question_Code" Type="int" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="Question_Code" />
+          </Key>
+          <Property Name="Question_Code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Question_Content" Type="varchar" MaxLength="200" />
+          <Property Name="Question_Type" Type="varchar" MaxLength="20" />
+          <Property Name="Test_Code" Type="int" />
+        </EntityType>
         <EntityType Name="Quiz_Detail">
           <Key>
             <PropertyRef Name="User_Code" />
@@ -20,13 +41,31 @@
           </Key>
           <Property Name="Story_Code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Story_Name" Type="varchar" MaxLength="50" />
-          <Property Name="Story_Content_EN" Type="varchar" MaxLength="500" />
-          <Property Name="Story_Content_VN" Type="nvarchar" MaxLength="500" />
+          <Property Name="Story_Content_EN" Type="varchar" MaxLength="50" />
+          <Property Name="Story_Content_VN" Type="nvarchar" MaxLength="50" />
           <Property Name="Story_Audio" Type="varchar" MaxLength="50" />
           <Property Name="Story_View" Type="int" />
           <Property Name="Story_banner" Type="varchar" MaxLength="50" />
           <Property Name="Story_image" Type="varchar" MaxLength="50" />
           <Property Name="Userz_Code" Type="int" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="Test_Code" />
+          </Key>
+          <Property Name="Test_Code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Test_Name" Type="varchar" MaxLength="20" />
+          <Property Name="Test_Paragraph" Type="varchar" MaxLength="50" />
+          <Property Name="Test_Video" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Test_Detail">
+          <Key>
+            <PropertyRef Name="Test_Code" />
+            <PropertyRef Name="User_Code" />
+          </Key>
+          <Property Name="Test_Code" Type="int" Nullable="false" />
+          <Property Name="User_Code" Type="int" Nullable="false" />
+          <Property Name="Test_Score" Type="float" />
         </EntityType>
         <EntityType Name="Userz">
           <Key>
@@ -49,8 +88,7 @@
           <Property Name="Vocabulary_Code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Vocabulary_English" Type="varchar" MaxLength="30" />
           <Property Name="Vocabulary_Vietnamese" Type="nvarchar" MaxLength="30" />
-          <Property Name="Vocabulary_Description" Type="varchar" MaxLength="100" />
-          <Property Name="Vocabulary_Pronunciation" Type="varchar" MaxLength="20" />
+          <Property Name="Vocabulary_Pronunciation" Type="nvarchar" MaxLength="20" />
           <Property Name="Vocabulary_Image" Type="varchar" MaxLength="50" />
           <Property Name="Vocabulary_Type_Code" Type="int" />
         </EntityType>
@@ -61,7 +99,31 @@
           <Property Name="Vocabulary_Type_Code" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Vocabulary_Type_EN_Name" Type="varchar" MaxLength="30" />
         </EntityType>
-        <Association Name="FK__Quiz_Deta__User___5CD6CB2B">
+        <Association Name="FK__Answer__Question__7E37BEF6">
+          <End Role="Question" Type="Self.Question" Multiplicity="0..1" />
+          <End Role="Answer" Type="Self.Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="Question_Code" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="Question_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Question__Test_C__75A278F5">
+          <End Role="Test" Type="Self.Test" Multiplicity="0..1" />
+          <End Role="Question" Type="Self.Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Test_Code" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="Test_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Quiz_Deta__User___0C85DE4D">
           <End Role="Userz" Type="Self.Userz" Multiplicity="1" />
           <End Role="Quiz_Detail" Type="Self.Quiz_Detail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -73,7 +135,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Quiz_Deta__Vocab__5DCAEF64">
+        <Association Name="FK__Quiz_Deta__Vocab__0D7A0286">
           <End Role="Vocabulary_Type" Type="Self.Vocabulary_Type" Multiplicity="1" />
           <End Role="Quiz_Detail" Type="Self.Quiz_Detail" Multiplicity="*" />
           <ReferentialConstraint>
@@ -85,7 +147,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Story__Userz_Cod__49C3F6B7">
+        <Association Name="FK__Story__Userz_Cod__10566F31">
           <End Role="Userz" Type="Self.Userz" Multiplicity="0..1" />
           <End Role="Story" Type="Self.Story" Multiplicity="*" />
           <ReferentialConstraint>
@@ -97,7 +159,31 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__Vocabular__Vocab__38996AB5">
+        <Association Name="FK__Test_Deta__Test___01142BA1">
+          <End Role="Test" Type="Self.Test" Multiplicity="1" />
+          <End Role="Test_Detail" Type="Self.Test_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Test_Code" />
+            </Principal>
+            <Dependent Role="Test_Detail">
+              <PropertyRef Name="Test_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Test_Deta__User___02084FDA">
+          <End Role="Userz" Type="Self.Userz" Multiplicity="1" />
+          <End Role="Test_Detail" Type="Self.Test_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Userz">
+              <PropertyRef Name="User_Code" />
+            </Principal>
+            <Dependent Role="Test_Detail">
+              <PropertyRef Name="User_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Vocabular__Vocab__09A971A2">
           <End Role="Vocabulary_Type" Type="Self.Vocabulary_Type" Multiplicity="0..1" />
           <End Role="Vocabulary" Type="Self.Vocabulary" Multiplicity="*" />
           <ReferentialConstraint>
@@ -110,24 +196,44 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="English_Learning_WebsiteModelStoreContainer">
+          <EntitySet Name="Answer" EntityType="Self.Answer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Question" EntityType="Self.Question" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quiz_Detail" EntityType="Self.Quiz_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Story" EntityType="Self.Story" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Test" EntityType="Self.Test" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Test_Detail" EntityType="Self.Test_Detail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Userz" EntityType="Self.Userz" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vocabulary" EntityType="Self.Vocabulary" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vocabulary_Type" EntityType="Self.Vocabulary_Type" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK__Quiz_Deta__User___5CD6CB2B" Association="Self.FK__Quiz_Deta__User___5CD6CB2B">
+          <AssociationSet Name="FK__Answer__Question__7E37BEF6" Association="Self.FK__Answer__Question__7E37BEF6">
+            <End Role="Question" EntitySet="Question" />
+            <End Role="Answer" EntitySet="Answer" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Question__Test_C__75A278F5" Association="Self.FK__Question__Test_C__75A278F5">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="Question" EntitySet="Question" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Quiz_Deta__User___0C85DE4D" Association="Self.FK__Quiz_Deta__User___0C85DE4D">
             <End Role="Userz" EntitySet="Userz" />
             <End Role="Quiz_Detail" EntitySet="Quiz_Detail" />
           </AssociationSet>
-          <AssociationSet Name="FK__Quiz_Deta__Vocab__5DCAEF64" Association="Self.FK__Quiz_Deta__Vocab__5DCAEF64">
+          <AssociationSet Name="FK__Quiz_Deta__Vocab__0D7A0286" Association="Self.FK__Quiz_Deta__Vocab__0D7A0286">
             <End Role="Vocabulary_Type" EntitySet="Vocabulary_Type" />
             <End Role="Quiz_Detail" EntitySet="Quiz_Detail" />
           </AssociationSet>
-          <AssociationSet Name="FK__Story__Userz_Cod__49C3F6B7" Association="Self.FK__Story__Userz_Cod__49C3F6B7">
+          <AssociationSet Name="FK__Story__Userz_Cod__10566F31" Association="Self.FK__Story__Userz_Cod__10566F31">
             <End Role="Userz" EntitySet="Userz" />
             <End Role="Story" EntitySet="Story" />
           </AssociationSet>
-          <AssociationSet Name="FK__Vocabular__Vocab__38996AB5" Association="Self.FK__Vocabular__Vocab__38996AB5">
+          <AssociationSet Name="FK__Test_Deta__Test___01142BA1" Association="Self.FK__Test_Deta__Test___01142BA1">
+            <End Role="Test" EntitySet="Test" />
+            <End Role="Test_Detail" EntitySet="Test_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Test_Deta__User___02084FDA" Association="Self.FK__Test_Deta__User___02084FDA">
+            <End Role="Userz" EntitySet="Userz" />
+            <End Role="Test_Detail" EntitySet="Test_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Vocabular__Vocab__09A971A2" Association="Self.FK__Vocabular__Vocab__09A971A2">
             <End Role="Vocabulary_Type" EntitySet="Vocabulary_Type" />
             <End Role="Vocabulary" EntitySet="Vocabulary" />
           </AssociationSet>
@@ -174,6 +280,26 @@
             <End Role="Vocabulary_Type" EntitySet="Vocabulary_Type" />
             <End Role="Quiz_Detail" EntitySet="Quiz_Detail" />
           </AssociationSet>
+          <EntitySet Name="Answers" EntityType="English_Learning_WebsiteModel.Answer" />
+          <EntitySet Name="Questions" EntityType="English_Learning_WebsiteModel.Question" />
+          <EntitySet Name="Tests" EntityType="English_Learning_WebsiteModel.Test" />
+          <EntitySet Name="Test_Detail" EntityType="English_Learning_WebsiteModel.Test_Detail" />
+          <AssociationSet Name="FK__Answer__Question__7B5B524B" Association="English_Learning_WebsiteModel.FK__Answer__Question__7B5B524B">
+            <End Role="Question" EntitySet="Questions" />
+            <End Role="Answer" EntitySet="Answers" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Question__Test_C__75A278F5" Association="English_Learning_WebsiteModel.FK__Question__Test_C__75A278F5">
+            <End Role="Test" EntitySet="Tests" />
+            <End Role="Question" EntitySet="Questions" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Test_Deta__Test___71D1E811" Association="English_Learning_WebsiteModel.FK__Test_Deta__Test___71D1E811">
+            <End Role="Test" EntitySet="Tests" />
+            <End Role="Test_Detail" EntitySet="Test_Detail" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Test_Deta__User___02084FDA" Association="English_Learning_WebsiteModel.FK__Test_Deta__User___02084FDA">
+            <End Role="Userz" EntitySet="Userzs" />
+            <End Role="Test_Detail" EntitySet="Test_Detail" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Vocabulary">
           <Key>
@@ -182,8 +308,7 @@
           <Property Name="Vocabulary_Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Vocabulary_English" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Vocabulary_Vietnamese" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
-          <Property Name="Vocabulary_Description" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Vocabulary_Pronunciation" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Vocabulary_Pronunciation" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <Property Name="Vocabulary_Image" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Vocabulary_Type_Code" Type="Int32" />
           <NavigationProperty Name="Vocabulary_Type" Relationship="English_Learning_WebsiteModel.FK__Vocabular__Vocab__38996AB5" FromRole="Vocabulary" ToRole="Vocabulary_Type" />
@@ -215,8 +340,8 @@
           </Key>
           <Property Name="Story_Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Story_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="Story_Content_EN" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
-          <Property Name="Story_Content_VN" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Story_Content_EN" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Story_Content_VN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Story_Audio" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Story_View" Type="Int32" />
           <Property Name="Story_banner" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
@@ -271,6 +396,99 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Answer">
+          <Key>
+            <PropertyRef Name="Answer_Code" />
+          </Key>
+          <Property Name="Answer_Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Question_Code" Type="Int32" />
+          <NavigationProperty Name="Question" Relationship="English_Learning_WebsiteModel.FK__Answer__Question__7B5B524B" FromRole="Answer" ToRole="Question" />
+          <Property Name="Answer_Content1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Answer_Content2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Answer_Content3" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Answer_Content4" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Answer_Correct" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Question">
+          <Key>
+            <PropertyRef Name="Question_Code" />
+          </Key>
+          <Property Name="Question_Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Question_Content" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Question_Type" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Test_Code" Type="Int32" />
+          <NavigationProperty Name="Answers" Relationship="English_Learning_WebsiteModel.FK__Answer__Question__7B5B524B" FromRole="Question" ToRole="Answer" />
+          <NavigationProperty Name="Test" Relationship="English_Learning_WebsiteModel.FK__Question__Test_C__75A278F5" FromRole="Question" ToRole="Test" />
+        </EntityType>
+        <EntityType Name="Test">
+          <Key>
+            <PropertyRef Name="Test_Code" />
+          </Key>
+          <Property Name="Test_Code" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Test_Name" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Test_Paragraph" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Test_Video" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Questions" Relationship="English_Learning_WebsiteModel.FK__Question__Test_C__75A278F5" FromRole="Test" ToRole="Question" />
+          <NavigationProperty Name="Test_Detail" Relationship="English_Learning_WebsiteModel.FK__Test_Deta__Test___71D1E811" FromRole="Test" ToRole="Test_Detail" />
+        </EntityType>
+        <EntityType Name="Test_Detail">
+          <Key>
+            <PropertyRef Name="Test_Code" />
+            <PropertyRef Name="User_Code" />
+          </Key>
+          <Property Name="Test_Code" Type="Int32" Nullable="false" />
+          <Property Name="Test_Score" Type="Double" />
+          <NavigationProperty Name="Test" Relationship="English_Learning_WebsiteModel.FK__Test_Deta__Test___71D1E811" FromRole="Test_Detail" ToRole="Test" />
+          <Property Name="User_Code" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Answer__Question__7B5B524B">
+          <End Type="English_Learning_WebsiteModel.Question" Role="Question" Multiplicity="0..1" />
+          <End Type="English_Learning_WebsiteModel.Answer" Role="Answer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Question">
+              <PropertyRef Name="Question_Code" />
+            </Principal>
+            <Dependent Role="Answer">
+              <PropertyRef Name="Question_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Question__Test_C__75A278F5">
+          <End Type="English_Learning_WebsiteModel.Test" Role="Test" Multiplicity="0..1" />
+          <End Type="English_Learning_WebsiteModel.Question" Role="Question" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Test_Code" />
+            </Principal>
+            <Dependent Role="Question">
+              <PropertyRef Name="Test_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Test_Deta__Test___71D1E811">
+          <End Type="English_Learning_WebsiteModel.Test" Role="Test" Multiplicity="1" />
+          <End Type="English_Learning_WebsiteModel.Test_Detail" Role="Test_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Test">
+              <PropertyRef Name="Test_Code" />
+            </Principal>
+            <Dependent Role="Test_Detail">
+              <PropertyRef Name="Test_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Test_Deta__User___02084FDA">
+          <End Type="English_Learning_WebsiteModel.Userz" Role="Userz" Multiplicity="1" />
+          <End Type="English_Learning_WebsiteModel.Test_Detail" Role="Test_Detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Userz">
+              <PropertyRef Name="User_Code" />
+            </Principal>
+            <Dependent Role="Test_Detail">
+              <PropertyRef Name="User_Code" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -298,7 +516,6 @@
                 <ScalarProperty Name="Vocabulary_Type_Code" ColumnName="Vocabulary_Type_Code" />
                 <ScalarProperty Name="Vocabulary_Image" ColumnName="Vocabulary_Image" />
                 <ScalarProperty Name="Vocabulary_Pronunciation" ColumnName="Vocabulary_Pronunciation" />
-                <ScalarProperty Name="Vocabulary_Description" ColumnName="Vocabulary_Description" />
                 <ScalarProperty Name="Vocabulary_Vietnamese" ColumnName="Vocabulary_Vietnamese" />
                 <ScalarProperty Name="Vocabulary_English" ColumnName="Vocabulary_English" />
                 <ScalarProperty Name="Vocabulary_Code" ColumnName="Vocabulary_Code" />
@@ -334,6 +551,48 @@
                 <ScalarProperty Name="Quiz_Score" ColumnName="Quiz_Score" />
                 <ScalarProperty Name="Vocabulary_Type_Code" ColumnName="Vocabulary_Type_Code" />
                 <ScalarProperty Name="User_Code" ColumnName="User_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Answers">
+            <EntityTypeMapping TypeName="English_Learning_WebsiteModel.Answer">
+              <MappingFragment StoreEntitySet="Answer">
+                <ScalarProperty Name="Answer_Correct" ColumnName="Answer_Correct" />
+                <ScalarProperty Name="Answer_Content4" ColumnName="Answer_Content4" />
+                <ScalarProperty Name="Answer_Content3" ColumnName="Answer_Content3" />
+                <ScalarProperty Name="Answer_Content2" ColumnName="Answer_Content2" />
+                <ScalarProperty Name="Answer_Content1" ColumnName="Answer_Content1" />
+                <ScalarProperty Name="Question_Code" ColumnName="Question_Code" />
+                <ScalarProperty Name="Answer_Code" ColumnName="Answer_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Questions">
+            <EntityTypeMapping TypeName="English_Learning_WebsiteModel.Question">
+              <MappingFragment StoreEntitySet="Question">
+                <ScalarProperty Name="Test_Code" ColumnName="Test_Code" />
+                <ScalarProperty Name="Question_Type" ColumnName="Question_Type" />
+                <ScalarProperty Name="Question_Content" ColumnName="Question_Content" />
+                <ScalarProperty Name="Question_Code" ColumnName="Question_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tests">
+            <EntityTypeMapping TypeName="English_Learning_WebsiteModel.Test">
+              <MappingFragment StoreEntitySet="Test">
+                <ScalarProperty Name="Test_Video" ColumnName="Test_Video" />
+                <ScalarProperty Name="Test_Paragraph" ColumnName="Test_Paragraph" />
+                <ScalarProperty Name="Test_Name" ColumnName="Test_Name" />
+                <ScalarProperty Name="Test_Code" ColumnName="Test_Code" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Test_Detail">
+            <EntityTypeMapping TypeName="English_Learning_WebsiteModel.Test_Detail">
+              <MappingFragment StoreEntitySet="Test_Detail">
+                <ScalarProperty Name="User_Code" ColumnName="User_Code" />
+                <ScalarProperty Name="Test_Score" ColumnName="Test_Score" />
+                <ScalarProperty Name="Test_Code" ColumnName="Test_Code" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

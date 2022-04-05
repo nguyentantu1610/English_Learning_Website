@@ -136,13 +136,18 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\GoogleTranslateController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\QuizController.cs" />
     <Compile Include="Controllers\StoryController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Controllers\VocabularyController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Answer.cs">
+      <DependentUpon>EnglishLearning.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EnglishLearning.Context.cs">
       <AutoGen>True</AutoGen>
@@ -159,6 +164,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>EnglishLearning.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Google.cs" />
+    <Compile Include="Models\Question.cs">
+      <DependentUpon>EnglishLearning.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Quiz_Detail.cs">
       <DependentUpon>EnglishLearning.tt</DependentUpon>
     </Compile>
@@ -166,6 +175,13 @@
       <DependentUpon>EnglishLearning.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\StoryBonus.cs" />
+    <Compile Include="Models\Test.cs">
+      <DependentUpon>EnglishLearning.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\TestBonus.cs" />
+    <Compile Include="Models\Test_Detail.cs">
+      <DependentUpon>EnglishLearning.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Userz.cs">
       <DependentUpon>EnglishLearning.tt</DependentUpon>
     </Compile>
@@ -182,31 +198,158 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\audio\audio1.mp3" />
+    <Content Include="Content\audio\audio10.mp3" />
+    <Content Include="Content\audio\audio11.mp3" />
+    <Content Include="Content\audio\audio12.mp3" />
+    <Content Include="Content\audio\audio13.mp3" />
+    <Content Include="Content\audio\audio14.mp3" />
+    <Content Include="Content\audio\audio15.mp3" />
+    <Content Include="Content\audio\audio2.mp3" />
+    <Content Include="Content\audio\audio3.mp3" />
+    <Content Include="Content\audio\audio4.mp3" />
+    <Content Include="Content\audio\audio5.mp3" />
+    <Content Include="Content\audio\audio6.mp3" />
+    <Content Include="Content\audio\audio7.mp3" />
+    <Content Include="Content\audio\audio8.mp3" />
+    <Content Include="Content\audio\audio9.mp3" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\1478594.png" />
-    <Content Include="Content\images\apple.png" />
-    <Content Include="Content\images\bicycle.png" />
+    <Content Include="Content\images\Apple.png" />
+    <Content Include="Content\images\Archery.png" />
+    <Content Include="Content\images\Athletics.png" />
+    <Content Include="Content\images\Avocado.png" />
+    <Content Include="Content\images\Badminton.png" />
+    <Content Include="Content\images\Banana.png" />
+    <Content Include="Content\images\Baseball.png" />
+    <Content Include="Content\images\Basketball.png" />
+    <Content Include="Content\images\Bicycle.png" />
+    <Content Include="Content\images\Bird.png" />
+    <Content Include="Content\images\Boat.png" />
+    <Content Include="Content\images\Boxing.png" />
+    <Content Include="Content\images\Bread.png" />
+    <Content Include="Content\images\Bus.png" />
+    <Content Include="Content\images\Cake.png" />
+    <Content Include="Content\images\Canoe.png" />
+    <Content Include="Content\images\Car.png" />
     <Content Include="Content\images\cat.png" />
+    <Content Include="Content\images\Chess.png" />
+    <Content Include="Content\images\Chicken.png" />
+    <Content Include="Content\images\Chips.png" />
+    <Content Include="Content\images\Dog.png" />
+    <Content Include="Content\images\Duck.png" />
+    <Content Include="Content\images\Dumpling.png" />
+    <Content Include="Content\images\Elephant.png" />
+    <Content Include="Content\images\Fish.png" />
     <Content Include="Content\images\football.png" />
+    <Content Include="Content\images\Giraffe.png" />
+    <Content Include="Content\images\Grape.png" />
+    <Content Include="Content\images\Helicopter.png" />
+    <Content Include="Content\images\Lemon.png" />
+    <Content Include="Content\images\Mango.png" />
+    <Content Include="Content\images\Motorbike.png" />
     <Content Include="Content\images\noodles.png" />
+    <Content Include="Content\images\Orange.png" />
+    <Content Include="Content\images\Pancake.png" />
+    <Content Include="Content\images\Peach.png" />
+    <Content Include="Content\images\Pig.png" />
+    <Content Include="Content\images\Pizza.png" />
+    <Content Include="Content\images\Plane.png" />
+    <Content Include="Content\images\Rabbit.png" />
+    <Content Include="Content\images\Sandwich.png" />
+    <Content Include="Content\images\Sausage.png" />
+    <Content Include="Content\images\Snack.png" />
+    <Content Include="Content\images\story1.png" />
+    <Content Include="Content\images\story10.png" />
+    <Content Include="Content\images\story11.png" />
+    <Content Include="Content\images\story12.png" />
+    <Content Include="Content\images\story13.png" />
+    <Content Include="Content\images\story14.png" />
+    <Content Include="Content\images\story15.png" />
     <Content Include="Content\images\story1_0.png" />
     <Content Include="Content\images\story1_1.png" />
+    <Content Include="Content\images\story2.png" />
     <Content Include="Content\images\story2_0.png" />
     <Content Include="Content\images\story2_1.png" />
+    <Content Include="Content\images\story3.png" />
     <Content Include="Content\images\story3_0.png" />
     <Content Include="Content\images\story3_1.png" />
+    <Content Include="Content\images\story4.png" />
     <Content Include="Content\images\story4_0.png" />
     <Content Include="Content\images\story4_1.png" />
+    <Content Include="Content\images\story5.png" />
     <Content Include="Content\images\story5_0.png" />
     <Content Include="Content\images\story5_1.png" />
+    <Content Include="Content\images\story6.png" />
+    <Content Include="Content\images\story7.png" />
+    <Content Include="Content\images\story8.png" />
+    <Content Include="Content\images\story9.png" />
+    <Content Include="Content\images\storybanner1.png" />
+    <Content Include="Content\images\storybanner10.png" />
+    <Content Include="Content\images\storybanner11.png" />
+    <Content Include="Content\images\storybanner12.png" />
+    <Content Include="Content\images\storybanner13.png" />
+    <Content Include="Content\images\storybanner14.png" />
+    <Content Include="Content\images\storybanner15.png" />
+    <Content Include="Content\images\storybanner2.png" />
+    <Content Include="Content\images\storybanner3.png" />
+    <Content Include="Content\images\storybanner4.png" />
+    <Content Include="Content\images\storybanner5.png" />
+    <Content Include="Content\images\storybanner6.png" />
+    <Content Include="Content\images\storybanner7.png" />
+    <Content Include="Content\images\storybanner8.png" />
+    <Content Include="Content\images\storybanner9.png" />
+    <Content Include="Content\images\Strawberry.png" />
+    <Content Include="Content\images\Swimming.png" />
+    <Content Include="Content\images\Train.png" />
+    <Content Include="Content\images\Truck.png" />
     <Content Include="Content\images\user.png" />
+    <Content Include="Content\images\Volleyball.png" />
+    <Content Include="Content\images\Watermelon.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Style.css" />
+    <Content Include="Content\txt\paragraph1.txt" />
+    <Content Include="Content\txt\paragraph2.txt" />
+    <Content Include="Content\txt\paragraph3.txt" />
+    <Content Include="Content\txt\paragraph4.txt" />
+    <Content Include="Content\txt\paragraph5.txt" />
+    <Content Include="Content\txt\story10_en.txt" />
+    <Content Include="Content\txt\story10_vn.txt" />
+    <Content Include="Content\txt\story11_en.txt" />
+    <Content Include="Content\txt\story11_vn.txt" />
+    <Content Include="Content\txt\story12_en.txt" />
+    <Content Include="Content\txt\story12_vn.txt" />
+    <Content Include="Content\txt\story13_en.txt" />
+    <Content Include="Content\txt\story13_vn.txt" />
+    <Content Include="Content\txt\story14_en.txt" />
+    <Content Include="Content\txt\story14_vn.txt" />
+    <Content Include="Content\txt\story15_en.txt" />
+    <Content Include="Content\txt\story15_vn.txt" />
     <Content Include="Content\txt\story1_en.txt" />
     <Content Include="Content\txt\story1_vn.txt" />
+    <Content Include="Content\txt\story2_en.txt" />
+    <Content Include="Content\txt\story2_vn.txt" />
+    <Content Include="Content\txt\story3_en.txt" />
+    <Content Include="Content\txt\story3_vn.txt" />
+    <Content Include="Content\txt\story4_en.txt" />
+    <Content Include="Content\txt\story4_vn.txt" />
+    <Content Include="Content\txt\story5_en.txt" />
+    <Content Include="Content\txt\story5_vn.txt" />
+    <Content Include="Content\txt\story6_en.txt" />
+    <Content Include="Content\txt\story6_vn.txt" />
+    <Content Include="Content\txt\story7_en.txt" />
+    <Content Include="Content\txt\story7_vn.txt" />
+    <Content Include="Content\txt\story8_en.txt" />
+    <Content Include="Content\txt\story8_vn.txt" />
+    <Content Include="Content\txt\story9_en.txt" />
+    <Content Include="Content\txt\story9_vn.txt" />
+    <Content Include="Content\video\video1.mp4" />
+    <Content Include="Content\video\video2.mp4" />
+    <Content Include="Content\video\video3.mp4" />
+    <Content Include="Content\video\video4.mp4" />
+    <Content Include="Content\video\video5.mp4" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -282,6 +425,11 @@
     <Content Include="Views\Quiz\Do_Quiz.cshtml" />
     <Content Include="Views\Quiz\Continue.cshtml" />
     <Content Include="Views\Quiz\Result.cshtml" />
+    <Content Include="Views\Test\Choose_Test.cshtml" />
+    <Content Include="Views\Test\Do_Test.cshtml" />
+    <Content Include="Views\Test\Result.cshtml" />
+    <Content Include="Views\Test\Continue.cshtml" />
+    <Content Include="Views\GoogleTranslate\GoogleTranslate.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

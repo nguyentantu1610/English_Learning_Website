@@ -17,7 +17,6 @@ namespace English_Learning_Website.Models
         public int Vocabulary_Code { get; set; }
         public string Vocabulary_English { get; set; }
         public string Vocabulary_Vietnamese { get; set; }
-        public string Vocabulary_Description { get; set; }
         public string Vocabulary_Pronunciation { get; set; }
         public string Vocabulary_Image { get; set; }
         public Nullable<int> Vocabulary_Type_Code { get; set; }

@@ -1,0 +1,40 @@
+﻿@model English_Learning_Website.Models.Google
+@{
+    ViewBag.Title = "GoogleTranslate";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>GoogleTranslate</h2>
+@using (Html.BeginForm("GoogleTranslate", "GoogleTranslate", FormMethod.Post))
+{
+    <div class="row">
+        <div class="column">
+            <label for="language">Please Select Language:</label>
+            <select name="checklanguage" id="checklanguage">
+                @if (Session["checklanguage"].ToString() == "english")
+                {
+                    <option value="english" selected>English - Vietnamese</option>
+                    <option value="vietnam">Vietnamese - English</option>
+                }
+                else
+                {
+                    <option value="english">English - Vietnamese</option>
+                    <option value="vietnam" selected>Vietnamese - English</option>
+                }
+            </select>
+            <div class="input-group">
+                <textarea name="content" id="content" rows="10" cols="30">@Model.content</textarea>
+            </div>
+        </div>
+        <div class="column">
+            <input id="btnSubmit1" type="submit" value="Translate" />
+        </div>
+
+        <div class="column">
+            @Html.ActionLink("Voice", "Speech", new { @class = "btn btn-default" })
+            <textarea rows="10" cols="30">@Session["translate"].ToString()</textarea>
+        </div>
+    </div>
+}
+
+

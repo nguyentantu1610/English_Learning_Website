@@ -31,6 +31,7 @@ namespace English_Learning_Website.Controllers
                 {
                     Session["User_Code"] = userz1.User_Code;
                 }
+                Session["User_Image"] = userz1.User_Image;
                 Session["User_FullName"] = userz1.User_FullName;
                 return RedirectToAction("HomePage", "Home");    
             }
@@ -59,6 +60,7 @@ namespace English_Learning_Website.Controllers
                     Session["User_Code"] = userz1.User_Code;
                 }
                 Session["User_FullName"] = userz1.User_FullName;
+                Session["User_Image"] = userz1.User_Image;
                 if (userz.RememberMe)
                 {
                     HttpCookie httpCookie = new HttpCookie("User_Mail");

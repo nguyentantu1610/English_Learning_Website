@@ -1,0 +1,44 @@
+﻿@model English_Learning_Website.Models.TestBonus
+@{
+    ViewBag.Title = "Continue";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("Check_Answer", "Test", FormMethod.Post))
+{
+    if (Model.Question_Type == "paragraph")
+    {
+        <div class="mydiv" style="width:100%;max-width:100%;background-color:lightgray;">
+            <pre id="Test_Paragraph">
+
+        </pre>
+        </div>
+    }
+    if (Model.Question_Type == "video")
+    {
+        <div class="mydiv" style="width:100%;max-width:100%;;">
+            <video style="width:100%;height:70vh;" controls>
+                <source src="/Content/video/@Session["video"]" type="video/mp4" />
+            </video>
+        </div>
+    }
+    <div class="mydiv" style="width:100%;max-width:100%;">
+        @Html.HiddenFor(model => model.Question_Code)
+        <font>@Session["Number_Test"] : </font>@Html.DisplayFor(model => model.Question_Content)
+        <hr />
+        <p>@Html.RadioButtonFor(model => model.Answer_Selected, Model.Answer_Content1) A. @Model.Answer_Content1</p>
+        <p>@Html.RadioButtonFor(model => model.Answer_Selected, Model.Answer_Content2) B. @Model.Answer_Content2</p>
+        <p>@Html.RadioButtonFor(model => model.Answer_Selected, Model.Answer_Content3) C. @Model.Answer_Content3</p>
+        <p>@Html.RadioButtonFor(model => model.Answer_Selected, Model.Answer_Content4) D. @Model.Answer_Content4</p>
+    </div>
+    <br />
+    <input type="submit" value="Next" class="btn btn-default" />
+}
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+        $(document).ready(function () {
+            $("#Test_Paragraph").load("/Content/txt/@Session["paragraph"]");
+        });
+</script>

@@ -5,6 +5,7 @@
 }
 
 <h2>Result</h2>
+
 @{ 
     List<bool> vs = Session["save_Result"] as List<bool>;
     List<int> a = new List<int>();
@@ -17,7 +18,7 @@
     <caption class="caption">Result</caption>
     <tr>
         <th>Number</th>
-        <th>Result</th>
+        <th>True / False</th>
     </tr>
     @foreach (var item in vs)
     {
@@ -27,7 +28,7 @@
                 <td>@number</td>
                 @if (item == true)
                 {
-                    <td style="color:greenyellow;">V</td>
+                    <td style="color:green;">V</td>
                 }
                 else
                 {

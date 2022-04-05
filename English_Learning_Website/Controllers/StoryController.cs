@@ -17,7 +17,7 @@ namespace English_Learning_Website.Controllers
         public ActionResult ListStory(int? page)
         {
             if (page == null) page = 1;
-            int pageSize = 3;
+            int pageSize = 9;
             int pageNum = page ?? 1;
             List<Story> story = db.Stories.ToList();
             List<StoryBonus> storyBonus = new List<StoryBonus>();
@@ -149,7 +149,7 @@ namespace English_Learning_Website.Controllers
         public ActionResult User_View(int? page)
         {
             if (page == null) page = 1;
-            int pageSize = 3;
+            int pageSize = 9;
             int pageNum = page ?? 1;
             List<Story> story = db.Stories.ToList();
             return View(story.ToPagedList(pageNum, pageSize));

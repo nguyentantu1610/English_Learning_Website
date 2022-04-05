@@ -24,8 +24,11 @@
                     <li>@Html.ActionLink("Learn Vocabulary", "User_View", "Vocabulary")</li>
                     <li>@Html.ActionLink("Read Story", "User_View", "Story")</li>
                     <li>@Html.ActionLink("Do Quiz", "Choose_Quiz", "Quiz")</li>
+                    <li>@Html.ActionLink("Do Test", "Choose_Test", "Test")</li>
+                    <li>@Html.ActionLink("Google Translate", "GoogleTranslate", "GoogleTranslate")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li><img src="~/Content/images/@Session["User_Image"]" class="avatar"/></li>
                     <li><a href="/Home/Account">@Session["User_FullName"]</a></li>
                     <li class="pull-right">@Html.ActionLink("Logout", "Logout", "Home")</li>
                 </ul>

@@ -100,7 +100,7 @@ namespace English_Learning_Website.Controllers
         public ActionResult ListVocabulary(int? page)
         {
             if (page == null) page = 1;
-            int pageSize = 3;
+            int pageSize = 9;
             int pageNum = page ?? 1;
             List<Vocabulary> vocabularies = db.Vocabularies.ToList();
             return View(vocabularies.ToPagedList(pageNum, pageSize));
@@ -155,7 +155,6 @@ namespace English_Learning_Website.Controllers
                     vocabulary.Vocabulary_Type_Code = vocabularyBonus.Vocabulary_Type_Code;
                     vocabulary.Vocabulary_English = vocabularyBonus.Vocabulary_English;
                     vocabulary.Vocabulary_Vietnamese = vocabularyBonus.Vocabulary_Vietnamese;
-                    vocabulary.Vocabulary_Description = vocabularyBonus.Vocabulary_Description;
                     vocabulary.Vocabulary_Pronunciation = vocabularyBonus.Vocabulary_Pronunciation;
                     if (vocabularyBonus.Vocabulary_Image != null)
                     {
@@ -198,7 +197,6 @@ namespace English_Learning_Website.Controllers
                 vocabularyBonus.Vocabulary_Image = vocabulary.Vocabulary_Image;
                 vocabularyBonus.Vocabulary_English = vocabulary.Vocabulary_English;
                 vocabularyBonus.Vocabulary_Vietnamese = vocabulary.Vocabulary_Vietnamese;
-                vocabularyBonus.Vocabulary_Description = vocabulary.Vocabulary_Description;
                 vocabularyBonus.Vocabulary_Pronunciation = vocabulary.Vocabulary_Pronunciation;
                 vocabularyBonus.Vocabulary_Type_Code = vocabulary.Vocabulary_Type.Vocabulary_Type_Code;
                 List<Vocabulary_Type> vocabulary_Types = db.Vocabulary_Type.ToList();
@@ -221,7 +219,6 @@ namespace English_Learning_Website.Controllers
                     vocabulary.Vocabulary_Type_Code = vocabularyBonus.Vocabulary_Type_Code;
                     vocabulary.Vocabulary_English = vocabularyBonus.Vocabulary_English;
                     vocabulary.Vocabulary_Vietnamese = vocabularyBonus.Vocabulary_Vietnamese;
-                    vocabulary.Vocabulary_Description = vocabularyBonus.Vocabulary_Description;
                     vocabulary.Vocabulary_Pronunciation = vocabularyBonus.Vocabulary_Pronunciation;
                     vocabulary.Vocabulary_Image = vocabularyBonus.Vocabulary_Image;
                     db.Vocabularies.AddOrUpdate(vocabulary);

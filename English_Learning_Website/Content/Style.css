@@ -9,6 +9,12 @@ html {
     -ms-text-size-adjust: 100%;
     -webkit-text-size-adjust: 100%;
 }
+.avatar {
+    margin-top:10px;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+}
 .myhover:hover {
     color: lawngreen;
 }
@@ -52,6 +58,9 @@ html {
 .myright {
     float: left;
     width: 50%;
+}
+.question {
+
 }
 
 .mydiv {
