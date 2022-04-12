@@ -16,8 +16,10 @@ namespace English_Learning_Website.Models
     {
         public int User_Code { get; set; }
         public int Vocabulary_Type_Code { get; set; }
+        public int Quiz_Code { get; set; }
         public Nullable<double> Quiz_Score { get; set; }
     
+        public virtual Quiz Quiz { get; set; }
         public virtual Userz Userz { get; set; }
         public virtual Vocabulary_Type Vocabulary_Type { get; set; }
     }

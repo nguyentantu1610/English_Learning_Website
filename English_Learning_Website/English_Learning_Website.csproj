@@ -146,9 +146,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Answer.cs">
-      <DependentUpon>EnglishLearning.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\EnglishLearning.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -168,6 +165,9 @@
     <Compile Include="Models\Question.cs">
       <DependentUpon>EnglishLearning.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Quiz.cs">
+      <DependentUpon>EnglishLearning.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Quiz_Detail.cs">
       <DependentUpon>EnglishLearning.tt</DependentUpon>
     </Compile>
@@ -178,7 +178,6 @@
     <Compile Include="Models\Test.cs">
       <DependentUpon>EnglishLearning.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\TestBonus.cs" />
     <Compile Include="Models\Test_Detail.cs">
       <DependentUpon>EnglishLearning.tt</DependentUpon>
     </Compile>
@@ -268,20 +267,10 @@
     <Content Include="Content\images\story13.png" />
     <Content Include="Content\images\story14.png" />
     <Content Include="Content\images\story15.png" />
-    <Content Include="Content\images\story1_0.png" />
-    <Content Include="Content\images\story1_1.png" />
     <Content Include="Content\images\story2.png" />
-    <Content Include="Content\images\story2_0.png" />
-    <Content Include="Content\images\story2_1.png" />
     <Content Include="Content\images\story3.png" />
-    <Content Include="Content\images\story3_0.png" />
-    <Content Include="Content\images\story3_1.png" />
     <Content Include="Content\images\story4.png" />
-    <Content Include="Content\images\story4_0.png" />
-    <Content Include="Content\images\story4_1.png" />
     <Content Include="Content\images\story5.png" />
-    <Content Include="Content\images\story5_0.png" />
-    <Content Include="Content\images\story5_1.png" />
     <Content Include="Content\images\story6.png" />
     <Content Include="Content\images\story7.png" />
     <Content Include="Content\images\story8.png" />
@@ -310,11 +299,16 @@
     <Content Include="Content\images\Watermelon.png" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Content\Style.css" />
+    <Content Include="Content\txt\quiz1.txt" />
     <Content Include="Content\txt\paragraph1.txt" />
     <Content Include="Content\txt\paragraph2.txt" />
     <Content Include="Content\txt\paragraph3.txt" />
     <Content Include="Content\txt\paragraph4.txt" />
     <Content Include="Content\txt\paragraph5.txt" />
+    <Content Include="Content\txt\quiz2.txt" />
+    <Content Include="Content\txt\quiz3.txt" />
+    <Content Include="Content\txt\quiz4.txt" />
+    <Content Include="Content\txt\quiz5.txt" />
     <Content Include="Content\txt\story10_en.txt" />
     <Content Include="Content\txt\story10_vn.txt" />
     <Content Include="Content\txt\story11_en.txt" />
@@ -400,8 +394,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Login\SignIn.cshtml" />
     <Content Include="Views\Login\SignUp.cshtml" />
-    <Content Include="Views\Login\SendMail.cshtml" />
-    <Content Include="Views\Login\CheckMail.cshtml" />
+    <Content Include="Views\Login\SendVC.cshtml" />
     <Content Include="Views\Login\ChangePassword.cshtml" />
     <Content Include="Views\Shared\_LayoutAdmin.cshtml" />
     <Content Include="Views\Vocabulary\EditVT.cshtml" />
@@ -413,7 +406,6 @@
     <Content Include="Views\Vocabulary\DeleteV.cshtml" />
     <Content Include="Views\Vocabulary\CreateV.cshtml" />
     <Content Include="Views\Vocabulary\EditV.cshtml" />
-    <Content Include="Views\Vocabulary\Speech.cshtml" />
     <Content Include="Views\Vocabulary\User_View.cshtml" />
     <Content Include="Views\Story\ListStory.cshtml" />
     <Content Include="Views\Story\CreateS.cshtml" />
@@ -421,15 +413,17 @@
     <Content Include="Views\Story\DetailS.cshtml" />
     <Content Include="Views\Story\DeleteS.cshtml" />
     <Content Include="Views\Story\User_View.cshtml" />
-    <Content Include="Views\Quiz\Choose_Quiz.cshtml" />
-    <Content Include="Views\Quiz\Do_Quiz.cshtml" />
+    <Content Include="Views\Quiz\Choose_Image_Quiz.cshtml" />
+    <Content Include="Views\Quiz\Do_Image_Quiz.cshtml" />
     <Content Include="Views\Quiz\Continue.cshtml" />
     <Content Include="Views\Quiz\Result.cshtml" />
+    <Content Include="Views\GoogleTranslate\GoogleTranslate.cshtml" />
+    <Content Include="Views\Quiz\Do_DragDrop_Quiz.cshtml" />
+    <Content Include="Views\Quiz\Choose_DragDrop_Quiz.cshtml" />
+    <Content Include="Views\Quiz\Result_DragDrop_Quiz.cshtml" />
     <Content Include="Views\Test\Choose_Test.cshtml" />
     <Content Include="Views\Test\Do_Test.cshtml" />
-    <Content Include="Views\Test\Result.cshtml" />
-    <Content Include="Views\Test\Continue.cshtml" />
-    <Content Include="Views\GoogleTranslate\GoogleTranslate.cshtml" />
+    <Content Include="Views\Test\Result_Test.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

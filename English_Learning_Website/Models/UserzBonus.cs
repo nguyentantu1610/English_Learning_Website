@@ -9,7 +9,7 @@ namespace English_Learning_Website.Models
 {
     public class UserzBonus
     {
-        [DisplayName("FullName : ")]
+        [DisplayName("Full Name : ")]
         [Required(ErrorMessage = " Please enter your full name ")]
         [MaxLength(35)]
         public string User_FullName { get; set; }
@@ -29,9 +29,6 @@ namespace English_Learning_Website.Models
         [DisplayName("Verification Code : ")]
         [Required(ErrorMessage = " Please enter your verification code ")]
         public int CheckMail{ get; set; }
-        [DisplayName("Date of Birth : ")]
-        [Required(ErrorMessage = " Please enter your birthday ")]
-        public Nullable<System.DateTime> User_Birthday { get; set; }
         [DisplayName("Gender : ")]
         [Required(ErrorMessage = " Please enter your gender ")]
         public string User_Gender { get; set; }

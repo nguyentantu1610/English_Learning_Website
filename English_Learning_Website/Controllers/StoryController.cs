@@ -120,7 +120,7 @@ namespace English_Learning_Website.Controllers
                 db.SaveChanges();
                 return View(story);
             }
-            return RedirectToAction("ListStory", "Story");
+            return RedirectToAction("User_View", "Story");
         }
         public ActionResult DeleteS(int id)
         {
@@ -146,13 +146,47 @@ namespace English_Learning_Website.Controllers
             }
             return file.FileName;
         }
-        public ActionResult User_View(int? page)
+        public ActionResult User_View(int? page, string searchStory, string sortStory)
         {
-            if (page == null) page = 1;
+            List<Story> stories = new List<Story>();
+            if (searchStory != null)
+            {
+                Session["searchStory"] = searchStory;
+                stories = db.Stories.Where(s => s.Story_Name.Contains(searchStory.Trim().ToLower())).ToList();
+            }
+            else
+            {
+                Session["searchStory"] = null;
+                stories = db.Stories.ToList();
+            }
+            List<Story> stories1;
+            if (sortStory == null || sortStory == "None")
+            {
+                Session["sortStory"] = "None";
+                stories1 = stories;
+            }
+            else if (sortStory == "AZ")
+            {
+                Session["sortStory"] = "A - Z";
+                stories1 = stories.OrderBy(s => s.Story_Name).ToList();
+            }
+            else if(sortStory == "ZA")
+            {
+                Session["sortStory"] = "Z - A";
+                stories1 = stories.OrderByDescending(s => s.Story_Name).ToList();
+            }
+            else
+            {
+                Session["sortStory"] = "View";
+                stories1 = stories.OrderBy(s => s.Story_View).ToList();
+            }
+            if (page == null)
+            {
+                page = 1;
+            }
             int pageSize = 9;
             int pageNum = page ?? 1;
-            List<Story> story = db.Stories.ToList();
-            return View(story.ToPagedList(pageNum, pageSize));
+            return View(stories1.ToPagedList(pageNum, pageSize));
         }
     }
 }

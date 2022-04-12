@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<English_Learning_Website.Models.Vocabulary_Type>
 @{
-    ViewBag.Title = "Choose_Quiz";
+    ViewBag.Title = "Choose Image Quiz";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Choose_Quiz</h2>
+<h2>Choose Image Quiz</h2>
 <div class="mydiv center-block">
     @using English_Learning_Website.Models;
     @{ 
@@ -13,7 +13,7 @@
     @foreach(var item in Model)
             {
     <div style="padding:16px;background-color:black;width:100%;max-width:100%;border-radius:16px;">
-        <a href="/Quiz/Do_Quiz/@item.Vocabulary_Type_Code" style="color: white; text-decoration: none; text-align: center;">@item.Vocabulary_Type_EN_Name</a>
+        <a href="/Quiz/Do_Image_Quiz/@item.Vocabulary_Type_Code" style="color: white; text-decoration: none; text-align: center;">@item.Vocabulary_Type_EN_Name</a>
         @foreach (var item1 in quiz_Details)
         {
             if (item1.Vocabulary_Type_Code == item.Vocabulary_Type_Code && item1.User_Code == user_Code)

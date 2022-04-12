@@ -11,17 +11,17 @@
         <AssociationConnector Association="English_Learning_WebsiteModel.FK__Vocabular__Vocab__38996AB5" />
         <EntityTypeShape EntityType="English_Learning_WebsiteModel.Story" Width="1.5" PointX="3" PointY="3.75" />
         <AssociationConnector Association="English_Learning_WebsiteModel.FK__Story__Userz_Cod__49C3F6B7" />
-        <EntityTypeShape EntityType="English_Learning_WebsiteModel.Quiz_Detail" Width="1.5" PointX="6.625" PointY="4.125" />
-        <AssociationConnector Association="English_Learning_WebsiteModel.FK__Quiz_Deta__User___5CD6CB2B" />
-        <AssociationConnector Association="English_Learning_WebsiteModel.FK__Quiz_Deta__Vocab__5DCAEF64" />
-        <EntityTypeShape EntityType="English_Learning_WebsiteModel.Answer" Width="1.5" PointX="5.25" PointY="10.25" />
-        <EntityTypeShape EntityType="English_Learning_WebsiteModel.Question" Width="1.5" PointX="3" PointY="10.125" />
         <EntityTypeShape EntityType="English_Learning_WebsiteModel.Test" Width="1.5" PointX="0.75" PointY="8.125" />
         <EntityTypeShape EntityType="English_Learning_WebsiteModel.Test_Detail" Width="1.5" PointX="4.875" PointY="6.625" />
-        <AssociationConnector Association="English_Learning_WebsiteModel.FK__Answer__Question__7B5B524B" />
-        <AssociationConnector Association="English_Learning_WebsiteModel.FK__Question__Test_C__75A278F5" />
         <AssociationConnector Association="English_Learning_WebsiteModel.FK__Test_Deta__Test___71D1E811" />
         <AssociationConnector Association="English_Learning_WebsiteModel.FK__Test_Deta__User___02084FDA" />
+        <EntityTypeShape EntityType="English_Learning_WebsiteModel.Quiz" Width="1.5" PointX="6.75" PointY="14" />
+        <EntityTypeShape EntityType="English_Learning_WebsiteModel.Quiz_Detail" Width="1.5" PointX="9" PointY="1.125" />
+        <AssociationConnector Association="English_Learning_WebsiteModel.FK__Quiz_Deta__Quiz___2180FB33" />
+        <AssociationConnector Association="English_Learning_WebsiteModel.FK__Quiz_Deta__User___1F98B2C1" />
+        <AssociationConnector Association="English_Learning_WebsiteModel.FK__Quiz_Deta__Vocab__208CD6FA" />
+        <EntityTypeShape EntityType="English_Learning_WebsiteModel.Question" Width="1.5" PointX="3" PointY="9.75" />
+        <AssociationConnector Association="English_Learning_WebsiteModel.FK__Question__Test_C__29221CFB" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

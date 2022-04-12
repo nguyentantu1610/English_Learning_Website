@@ -14,19 +14,16 @@ namespace English_Learning_Website.Models
     
     public partial class Question
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Question()
-        {
-            this.Answers = new HashSet<Answer>();
-        }
-    
         public int Question_Code { get; set; }
         public string Question_Content { get; set; }
         public string Question_Type { get; set; }
+        public string Answer_Content1 { get; set; }
+        public string Answer_Content2 { get; set; }
+        public string Answer_Content3 { get; set; }
+        public string Answer_Content4 { get; set; }
+        public string Answer_Correct { get; set; }
         public Nullable<int> Test_Code { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Answer> Answers { get; set; }
         public virtual Test Test { get; set; }
     }
 }

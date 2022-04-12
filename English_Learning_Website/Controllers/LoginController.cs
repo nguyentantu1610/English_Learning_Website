@@ -23,17 +23,24 @@ namespace English_Learning_Website.Controllers
                 userz.User_Mail = Request.Cookies["User_Mail"].Value;
                 userz.User_Password = Request.Cookies["User_Password"].Value;
                 Userz userz1 = db.Userzs.Where(s => s.User_Mail == userz.User_Mail && s.User_Password == userz.User_Password).FirstOrDefault();
-                if (userz1.User_Category == true)
+                if(userz1 != null)
                 {
-                    Session["Admin_Code"] = userz1.User_Code;
+                    if (userz1.User_Category == true)
+                    {
+                        Session["Admin_Code"] = userz1.User_Code;
+                    }
+                    else
+                    {
+                        Session["User_Code"] = userz1.User_Code;
+                    }
+                    Session["User_Image"] = userz1.User_Image;
+                    Session["User_FullName"] = userz1.User_FullName;
+                    return RedirectToAction("HomePage", "Home");
                 }
                 else
                 {
-                    Session["User_Code"] = userz1.User_Code;
+                    return View();
                 }
-                Session["User_Image"] = userz1.User_Image;
-                Session["User_FullName"] = userz1.User_FullName;
-                return RedirectToAction("HomePage", "Home");    
             }
             else
             {
@@ -46,8 +53,8 @@ namespace English_Learning_Website.Controllers
             Userz userz1 = db.Userzs.Where(s => s.User_Password == userz.User_Password && s.User_Mail == userz.User_Mail).FirstOrDefault();
             if (userz1 == null)
             {
-                ViewData["NotFound"] = " Wrong gmail or password ";
-                return View("SignIn", userz);
+                ViewData["UserNotFound"] = " Wrong gmail or password ";
+                return this.SignIn();
             }
             else
             {
@@ -98,37 +105,63 @@ namespace English_Learning_Website.Controllers
                         userz1.User_Image = "user.png";
                         db.Userzs.AddOrUpdate(userz1);
                         db.SaveChanges();
+                        MailAddress fromGMail = new MailAddress("garena281215@gmail.com", "HKT2 Company");
+                        MailAddress toGMail = new MailAddress(userz.User_Mail, "Me");
+                        MailMessage Message = new MailMessage()
+                        {
+                            From = fromGMail,
+                            Subject = "Create Account Successful",
+                            Body = "Dear " + userz.User_FullName.ToString() + ",\n" + "You have created account successful\n" + "Now, you can learn vocabulary, read story, do quiz and test in our website\n" + "We wish you have fun and progess in your studies,\n"+"HKT2",
+                            Priority = MailPriority.High,
+                            IsBodyHtml = false
+                        };
+                        Message.To.Add(toGMail);
+                        SmtpClient smtp = new SmtpClient()
+                        {
+                            Host = "smtp.gmail.com",
+                            Port = 587,
+                            EnableSsl = true,
+                            DeliveryMethod = SmtpDeliveryMethod.Network,
+                            UseDefaultCredentials = false,
+                            Credentials = new NetworkCredential()
+                            {
+                                UserName = "garena281215@gmail.com",
+                                Password = "lcxehypdkkvzyzqh"
+                            }
+                        };
+                        smtp.Send(Message);
                         return RedirectToAction("SignIn", "Login");
                     }
                     else
                     {
                         ViewData["WrongPassword"] = " Please enter the correct password ";
-                        return View("SignUp", userz);
                     }
                 }    
                 else
                 {
-                    ViewData["Existed"] = " Gmail existed ";
-                    return View("SignUp", userz);
-                }    
-            }
-                catch (Exception)
-                {
-                    return HttpNotFound();
+                    ViewData["UserExisted"] = " Gmail existed ";
                 }
+                return this.SignUp();
             }
+            catch (Exception)
+            {
+                return HttpNotFound();
+            }
+        }
         static int reCode;
         Random rd = new Random();
-        public ActionResult SendMail()
+        public ActionResult SendVC()
         {
             return View();
         }
+        static string user_mail;
         [HttpPost]
-        public ActionResult SendMail (UserzBonus userzBonus)
+        public ActionResult SendVC(UserzBonus userzBonus)
         {
             Userz userz = db.Userzs.FirstOrDefault(s => s.User_Mail == userzBonus.User_Mail);
             if (userz != null)
             {
+                user_mail = userzBonus.User_Mail;
                 MailAddress fromGMail = new MailAddress("garena281215@gmail.com", "HKT2 Company");
                 MailAddress toGMail = new MailAddress(userzBonus.User_Mail, "Me");
                 reCode = rd.Next(100000, 999999);
@@ -155,17 +188,12 @@ namespace English_Learning_Website.Controllers
                     }
                 };
                 smtp.Send(Message);
-                return RedirectToAction("CheckMail", "Login");
             }    
             else
             {
                 ViewData["MailNotFound"] = "Gmail not found";
-                return View("SendMail",userzBonus);
-            }    
-        }
-        public ActionResult CheckMail()
-        {
-            return View();
+            }
+            return this.SendVC();
         }
         [HttpPost]
         public ActionResult CheckMail(UserzBonus userzBonus)
@@ -176,13 +204,15 @@ namespace English_Learning_Website.Controllers
             }  
             else
             {
-                ViewData["Error"] = " Wrong verification code";
-                 return View();
+                ViewData["WrongVC"] = " Wrong verification code";
+                 return this.SendVC();
             }    
         }
         public ActionResult ChangePassword()
         {
-            return View();
+            UserzBonus userzBonus = new UserzBonus();
+            userzBonus.User_Mail = user_mail;
+            return View(userzBonus);
         }
         [HttpPost]
         public ActionResult ChangePassword(UserzBonus userzBonus)
@@ -200,14 +230,14 @@ namespace English_Learning_Website.Controllers
                 else
                 {
                     ViewData["Null"] = " Gmail not found ";
-                    return View("ChangePassword",userzBonus);
                 }
-            }    
+           }    
            else
             {
                 ViewData["NotEqual"] = " Please enter correct infomation ";
-                return View("ChangePassword", userzBonus);
-            }    
+
+           }
+           return this.ChangePassword();
         }
     }
 }

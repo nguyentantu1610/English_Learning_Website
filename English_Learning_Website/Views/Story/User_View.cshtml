@@ -5,55 +5,63 @@
     ViewBag.Title = "User_View";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>Learn Vocabulary</h2>
-<div class="input-group">
-    <input type="text" id="search-story" class="form-control pull-right" placeholder="Type keyword ..." />
-    <span class="input-group-addon">
-        <i class="glyphicon glyphicon-search "></i>
-    </span>
-</div>
-<hr />
-<div class="a2">
-    @foreach (var item in Model)
-    {
-        <div class="column" style="border-radius:0;">
-            <div class="card search-list">
-                <img src="~/Content/images/@item.Story_image" alt="Story Image" style="width:100%;height:250px;position:relative;" />
-                <h1 style="text-align:center;font-family:cursive;" class="myhover">@item.Story_Name</h1>
-                <p style="color:gray;">@item.Story_View view</p>
-                <p style="padding:10px;width:100%;background-color:#333333;color:white;font-size:14px;"><a href="/Story/DetailS/@item.Story_Code" style="color:white;text-decoration:none;">Read</a></p>
-            </div>
-        </div>
+<style>
+    .pull-right {
+        padding: 5px;
     }
-</div>
-<script src="~/Scripts/jquery-3.4.1.min.js"></script>
-<script>
-    $(document).ready(function () {
-        function Check(name1, name2) {
-            if (name1.indexOf(name2) != -1) {
-                return true;
-            }
+</style>
+<h2>Learn Vocabulary</h2>
+<br />
+@using (Html.BeginForm("User_View", "Story", FormMethod.Get))
+{
+    <div>
+        <input type="submit" value="Go" class="btn btn-primary pull-right" style="width:50px;"/>
+        <input type="text" id="searchStory" name="searchStory" class="form-control pull-right" placeholder="Type keyword to search ..." value="@Session["searchStory"]" required />
+        <label class="pull-right"> | </label>
+        <select id="sortStory" name="sortStory" class="form-control center-block pull-right" style="width:10%;max-width:10%;">
+            <option for="sortStory" id="sortStory" name="sortStory" value="@Session["sortStory"]">@Session["sortStory"]</option>
+            <option for="sortStory" id="sortStory" name="sortStory" value="None">None</option>
+            <option for="sortStory" id="sortStory" name="sortStory" value="AZ">A - Z</option>
+            <option for="sortStory" id="sortStory" name="sortStory" value="ZA">Z - A</option>
+            <option for="sortStory" id="sortStory" name="sortStory" value="View">View</option>
+        </select>
+        <label class="pull-right">Sort by : </label>
+    </div>
+    <br />
+    <hr />
+    <div class="a2">
+        @foreach (var item in Model)
+        {
+            <a href="/Story/DetailS/@item.Story_Code" style="color:white;text-decoration:none;">
+                <div class="column" style="border-radius:0;">
+                    <div class="card">
+                        <img src="~/Content/images/@item.Story_image" alt="Story Image" style="width:100%;height:250px;position:relative;" />
+                        <h2 style="text-align:center;font-family:cursive;color:black;">@item.Story_Name</h2>
+                        <p style="color:gray;">/ @item.Story_View view /</p>
+                        <p style="padding:10px;width:100%;background-color:#333333;color:white;font-size:14px;">
+                            Read
+                        </p>
+                    </div>
+                </div>
+            </a>
         }
-        $("#search-story").keyup(function () {
-            var searchResult = $("#search-story").val();
-            $(".search-list").each(function () {
-                if (Check($(this).text().toLowerCase(), searchResult.toLowerCase())) {
-                    $(this).show();
-                }
-                else {
-                    $(this).hide();
-                }
-            });
-        });
-    });
-</script>
-<div>
-    <div>
-        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
     </div>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
     <div>
-        @Html.PagedListPager(Model, page => Url.Action("User_View", new { page = page }))
+        <div>
+            Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+        </div>
+        <div>
+            @if (Session["searchStory"] != null)
+            {
+                @Html.PagedListPager(Model, page => Url.Action("User_View", new { page = page, searchStory = Session["searchStory"], sortStory = Session["sortStory"] }))
+            }
+            else
+            {
+                @Html.PagedListPager(Model, page => Url.Action("User_View", new { page = page }))
+            }
+        </div>
     </div>
-</div>
+}
 
 

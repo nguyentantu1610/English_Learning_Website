@@ -10,10 +10,9 @@
     <div class="thumbnail">
         <img src="~/Content/images/@Model.Vocabulary_Image" alt="Vocabulary Image" style="width:250px;height:250px;" />
     </div>
-    <div class="pull-right"><font style="padding:10px;background-color:lightgray;border-radius:16px;">@Session["No"] / @Session["Count_List"]</font></div>
+    <div class="pull-right"><font style="padding:10px;background-color:lightgray;border-radius:16px;">@Session["Image_Quiz_Index"] / @Session["Count_Image_Quiz_List"]</font></div>
     <br />
     <br />
-    <font style="color:red;">@ViewData["Correct"]</font>
     <div class="text-center">
         <label>Type your answer in the text-box : </label> <input type="text" id="answer" name="answer" class="form-control" style="width:30%;max-width:30%;display:inline-block" placeholder="Type your answer ..." maxlength="30" data-val="true" data-val-required=" Please enter your answer " autofocus /> <input type="submit" value="Next" class="btn btn-info" />
     </div>

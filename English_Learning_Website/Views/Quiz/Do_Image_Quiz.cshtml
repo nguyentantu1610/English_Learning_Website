@@ -1,6 +1,6 @@
 ﻿@model English_Learning_Website.Models.Vocabulary
 @{
-    ViewBag.Title = "Do_Quiz";
+    ViewBag.Title = "Do Image Quiz";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using (Html.BeginForm("Check_Answer", "Quiz", FormMethod.Post))
@@ -9,7 +9,7 @@
     <div class="thumbnail">
         <img src="~/Content/images/@Model.Vocabulary_Image" alt="Vocabulary Image" style="width:250px;height:250px;" />
     </div>
-    <div  class="pull-right"><font style="padding:10px;background-color:lightgray;border-radius:16px;">@Session["No"] / @Session["Count_List"]</font></div>
+    <div  class="pull-right"><font style="padding:10px;background-color:lightgray;border-radius:16px;">@Session["Image_Quiz_Index"] / @Session["Count_Image_Quiz_List"]</font></div>
     <br />
     <br />
     <div class="text-center">

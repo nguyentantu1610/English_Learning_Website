@@ -15,10 +15,6 @@ html {
     height:30px;
     border-radius:50%;
 }
-.myhover:hover {
-    color: lawngreen;
-}
-
 .column {
     float: left;
     width: 33.33%;

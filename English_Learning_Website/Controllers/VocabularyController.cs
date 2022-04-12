@@ -113,14 +113,14 @@ namespace English_Learning_Website.Controllers
         public async Task<ActionResult> Speech(int id)
         {
             Vocabulary vocabulary = db.Vocabularies.FirstOrDefault(s => s.Vocabulary_Code == id);
-            Task<ViewResult> viewResult = Task.Run(() =>
+            Task<RedirectToRouteResult> viewResult = Task.Run(() =>
              {
                  using (SpeechSynthesizer sp = new SpeechSynthesizer())
                  {
                      sp.SelectVoice("Microsoft Zira Desktop");
                      sp.SetOutputToDefaultAudioDevice();
                      sp.Speak(vocabulary.Vocabulary_English);
-                     return View(vocabulary);
+                     return RedirectToAction("DetailV/" + id);
                  }
              });
             return await viewResult;
@@ -232,25 +232,52 @@ namespace English_Learning_Website.Controllers
                 return HttpNotFound();
             }
         }
-        public ActionResult User_View(int? id, int? page)
+        public ActionResult User_View(int? id, int? page, string searchVocabulary, string sortVocabulary)
         {
-            if (page == null) page = 1;
-            int pageSize = 9;
-            int pageNum = page ?? 1;
-            if (id == null)
+            List<Vocabulary_Type> vocabulary_Types = db.Vocabulary_Type.ToList();
+            Session["Index"] = vocabulary_Types;
+            List<Vocabulary> vocabularies = new List<Vocabulary>();
+            if (searchVocabulary != null)
             {
-                List<Vocabulary> vocabularies = db.Vocabularies.ToList();
-                List<Vocabulary_Type> vocabulary_Types = db.Vocabulary_Type.ToList();
-                Session["Index"] = vocabulary_Types;
-                return View(vocabularies.ToPagedList(pageNum, pageSize));
+                Session["searchVocabulary"] = searchVocabulary;
+                vocabularies = db.Vocabularies.Where(s => s.Vocabulary_English.Contains(searchVocabulary.Trim().ToLower())).ToList();
             }
             else
             {
-                Vocabulary_Type vocabulary_Type = db.Vocabulary_Type.FirstOrDefault(s => s.Vocabulary_Type_Code == id);
-                List<Vocabulary> vocabularies = db.Vocabularies.Where(s => s.Vocabulary_Type_Code == vocabulary_Type.Vocabulary_Type_Code).ToList();
-                return View(vocabularies.ToPagedList(pageNum, pageSize));
+                Session["searchVocabulary"] = null;
+                if (id == null)
+                {
+                    vocabularies = db.Vocabularies.ToList();
+                }
+                if (id != null)
+                {
+                    Vocabulary_Type vocabulary_Type = db.Vocabulary_Type.FirstOrDefault(s => s.Vocabulary_Type_Code == id);
+                    vocabularies = db.Vocabularies.Where(s => s.Vocabulary_Type_Code == vocabulary_Type.Vocabulary_Type_Code).ToList();
+                }
             }
+            List<Vocabulary> vocabularies1;
+            if (sortVocabulary == null || sortVocabulary == "None")
+            {
+                Session["Vocabulary_Sort"] = "None";
+                vocabularies1 = vocabularies;
+            }
+            else if (sortVocabulary == "AZ")
+            {
+                Session["Vocabulary_Sort"] = "A - Z";
+                vocabularies1 = vocabularies.OrderBy(s => s.Vocabulary_English).ToList();
+            }
+            else
+            {
+                Session["Vocabulary_Sort"] = "Z - A";
+                vocabularies1 = vocabularies.OrderByDescending(s => s.Vocabulary_English).ToList();
+            }
+            if (page == null)
+            {
+                page = 1;
+            }
+            int pageSize = 9;
+            int pageNum = page ?? 1;
+            return View(vocabularies1.ToPagedList(pageNum, pageSize));
         }
-        
     }
 }

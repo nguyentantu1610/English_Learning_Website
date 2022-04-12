@@ -12,23 +12,24 @@ namespace English_Learning_Website.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class Test
+    public partial class Quiz
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Test()
+        public Quiz()
         {
-            this.Test_Detail = new HashSet<Test_Detail>();
-            this.Questions = new HashSet<Question>();
+            this.Quiz_Detail = new HashSet<Quiz_Detail>();
         }
     
-        public int Test_Code { get; set; }
-        public string Test_Name { get; set; }
-        public string Test_Paragraph { get; set; }
-        public string Test_Video { get; set; }
+        public int Quiz_Code { get; set; }
+        public string Quiz_Name { get; set; }
+        public string Quiz_Content { get; set; }
+        public string Quiz_AnswerOne { get; set; }
+        public string Quiz_AnswerTwo { get; set; }
+        public string Quiz_AnswerThree { get; set; }
+        public string Quiz_AnswerFour { get; set; }
+        public string Quiz_AnswerFive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Test_Detail> Test_Detail { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Question> Questions { get; set; }
+        public virtual ICollection<Quiz_Detail> Quiz_Detail { get; set; }
     }
 }

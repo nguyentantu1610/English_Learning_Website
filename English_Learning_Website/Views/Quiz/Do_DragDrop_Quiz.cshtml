@@ -1,0 +1,107 @@
+﻿@model English_Learning_Website.Models.Quiz
+@{
+    ViewBag.Title = "Do Drag & Drop Quiz";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm("Do_DragDrop_Quiz", "Quiz", FormMethod.Post))
+{
+    <h3>Drag items below and Drop it into correct textbox : </h3>
+    <div>
+        <p id="@Model.Quiz_AnswerOne" draggable="true" ondragstart="drag1(event)" class="btn btn-default">@Model.Quiz_AnswerOne</p>
+        <p id="@Model.Quiz_AnswerTwo" draggable="true" ondragstart="drag2(event)" class="btn btn-default">@Model.Quiz_AnswerTwo</p>
+        <p id="@Model.Quiz_AnswerThree" draggable="true" ondragstart="drag3(event)" class="btn btn-default">@Model.Quiz_AnswerThree</p>
+        <p id="@Model.Quiz_AnswerFour" draggable="true" ondragstart="drag4(event)" class="btn btn-default">@Model.Quiz_AnswerFour</p>
+        <p id="@Model.Quiz_AnswerFive" draggable="true" ondragstart="drag5(event)" class="btn btn-default">@Model.Quiz_AnswerFive</p>
+    </div>
+    <hr />
+    <div>
+        <p id="Quiz_Content"></p>
+    </div>
+    <input type="submit" value="Submit" class="btn btn-info"/>
+}
+<script>
+    function allowDrop1(ev) {
+        ev.preventDefault();
+    }
+
+    function drag1(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop1(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+        document.getElementById("dropone").value = data;
+    }
+    /*----------------------------------------------------------*/
+    function allowDrop2(ev) {
+        ev.preventDefault();
+    }
+
+    function drag2(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop2(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+        document.getElementById("droptwo").value = data;
+    }
+    /*----------------------------------------------------------*/
+    function allowDrop3(ev) {
+        ev.preventDefault();
+    }
+
+    function drag3(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop3(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+        document.getElementById("dropthree").value = data;
+    }
+    /*----------------------------------------------------------*/
+    function allowDrop4(ev) {
+        ev.preventDefault();
+    }
+
+    function drag4(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop4(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+        document.getElementById("dropfour").value = data;
+    }
+    /*----------------------------------------------------------*/
+    function allowDrop5(ev) {
+        ev.preventDefault();
+    }
+
+    function drag5(ev) {
+        ev.dataTransfer.setData("text", ev.target.id);
+    }
+
+    function drop5(ev) {
+        ev.preventDefault();
+        var data = ev.dataTransfer.getData("text");
+        ev.target.appendChild(document.getElementById(data));
+        document.getElementById("dropfive").value = data;
+    }
+</script>
+<script src="~/Scripts/jquery-3.4.1.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#Quiz_Content").load("/Content/txt/@Model.Quiz_Content");
+    });
+</script>
+

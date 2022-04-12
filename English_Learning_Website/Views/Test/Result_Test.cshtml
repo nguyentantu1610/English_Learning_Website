@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "Result_Test";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mydiv center-block">
+    <h2 style="text-align:center;">Your Test Score : </h2>
+    <hr />
+    <h3 style="text-align:center;">@Session["Test_Score"] / 10</h3>
+    @Html.ActionLink("Back", "Choose_Test", "Test", new { @class = "btn btn-default", @style = "width:100%;" })
+</div>
+

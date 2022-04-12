@@ -4,18 +4,19 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Result</h2>
-
+<h2 style="text-align:center;">Your score : </h2>
+<h3 style="text-align:center;">@Session["Image_Quiz_Score"]</h3>
+<hr />
+<h2 style="text-align:center;">Your answer : </h2>
 @{ 
-    List<bool> vs = Session["save_Result"] as List<bool>;
+    List<bool> vs = Session["Image_Quiz_Result"] as List<bool>;
     List<int> a = new List<int>();
-    for (int i = 1; i < 11; i ++)
+    for (int i = 1; i < 6; i ++)
     {
         a.Add(i);
     }
 }
 <table class="table-hover table table-responsive tr">
-    <caption class="caption">Result</caption>
     <tr>
         <th>Number</th>
         <th>True / False</th>
@@ -41,4 +42,7 @@
 
     }
 </table>
+<div>
+    @Html.ActionLink("Back","Choose_Image_Quiz","Quiz", new {@class ="btn btn-default"})
+</div>
 

@@ -1,7 +1,14 @@
 ﻿@model English_Learning_Website.Models.Vocabulary
 @{
     ViewBag.Title = "DetailV";
-    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    if (Session["User_Code"] != null)
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    if (Session["Admin_Code"] != null)
+    {
+        Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+    }
 }
 
 <h2>DetailV</h2>
@@ -14,7 +21,7 @@
     <p><strong>Pronunciation : </strong>@Html.ValueFor(model => model.Vocabulary_Pronunciation) @Html.ActionLink("Voice", "Speech", new { id = Model.Vocabulary_Code }, new { @class = "btn btn-default" }) </p>
 </div>
 <div>
-    @Html.ActionLink("Back to List", "ListVocabulary", "Vocabulary", new { @class = "btn btn-default" })
+    @Html.ActionLink("Back", "User_View", "Vocabulary", new { @class = "btn btn-default" })
 </div>
 
 

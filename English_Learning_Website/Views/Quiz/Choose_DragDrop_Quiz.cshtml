@@ -1,0 +1,29 @@
+﻿@model IEnumerable<English_Learning_Website.Models.Quiz>
+@{
+    ViewBag.Title = "Choose Drag & Drop Quiz";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>Choose Drag & Drop Quiz</h2>
+<div class="mydiv center-block">
+    @using English_Learning_Website.Models;
+    @{
+        List<Quiz_Detail> quiz_Details = Session["quiz_Details"] as List<Quiz_Detail>;
+        int user_Code = int.Parse(Session["User_Code"].ToString());
+    }
+    @foreach (var item in Model)
+    {
+        <div style="padding:16px;background-color:black;width:100%;max-width:100%;border-radius:16px;">
+            <a href="/Quiz/Do_DragDrop_Quiz/@item.Quiz_Code" style="color: white; text-decoration: none; text-align: center;">@item.Quiz_Name</a>
+            @foreach (var item1 in quiz_Details)
+            {
+                if (item1.Quiz_Code == item.Quiz_Code && item1.User_Code == user_Code)
+                {
+                    <p class="pull-right" style="color:white;">@item1.Quiz_Score</p>
+                    break;
+                }
+            }
+        </div>
+        <br />
+    }
+</div>
+

@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Speech.Synthesis;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
@@ -52,6 +54,30 @@ namespace English_Learning_Website.Controllers
             Session["checklanguage"] = gg.checklanguage;
             Session["translate"] = translation.ToString();
             return View(gg);
+        }
+        public async Task<ActionResult> Speech()
+        {
+            if(Session["translate"] != null)
+            {
+                Task<ViewResult> viewResult = Task.Run(() =>
+                {
+                    using (SpeechSynthesizer sp = new SpeechSynthesizer())
+                    {
+                        sp.SelectVoice("Microsoft Zira Desktop");
+                        sp.SetOutputToDefaultAudioDevice();
+                        sp.Speak(Session["translate"].ToString());
+                        Google google = new Google();
+                        google.checklanguage = Session["checklanguage"].ToString();
+                        google.content = Session["translate"].ToString();
+                        return View("GoogleTranslate", google);
+                    }
+                });
+                return await viewResult;
+            }
+            else
+            {
+                return this.GoogleTranslate();
+            }
         }
     }
 }
