@@ -12,6 +12,7 @@ namespace English_Learning_Website.Models
 {
     public class VocabularyBonus
     {
+        [Required(ErrorMessage = " Please choose vocabulary type ")]
         public List<Vocabulary_Type> vocabulary_Types { get; set; }
         public List<Vocabulary> vocabularies { get; set; }
         [DisplayName("English Name : ")]

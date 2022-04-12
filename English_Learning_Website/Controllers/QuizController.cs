@@ -220,5 +220,128 @@ namespace English_Learning_Website.Controllers
         {
             return View();
         }
+        public ActionResult ListQuiz(int? page, string searchQuiz, string sortQuiz)
+        {
+            List<Quiz> quizzes = new List<Quiz>();
+            if (searchQuiz != null)
+            {
+                Session["searchQuiz"] = searchQuiz;
+                quizzes = db.Quizs.Where(s => s.Quiz_Name.Contains(searchQuiz.Trim().ToLower()) && s.Quiz_Code != 6).ToList();
+            }
+            else
+            {
+                Session["searchQuiz"] = null;
+                quizzes = db.Quizs.Where(s => s.Quiz_Code != 6).ToList();
+            }
+            List<Quiz> quizzes1;
+            if (sortQuiz == null || sortQuiz == "None")
+            {
+                Session["sortQuiz"] = "None";
+                quizzes1 = quizzes;
+            }
+            else if (sortQuiz == "AZ")
+            {
+                Session["sortQuiz"] = "A - Z";
+                quizzes1 = quizzes.OrderBy(s => s.Quiz_Name).ToList();
+            }
+            else
+            {
+                Session["sortQuiz"] = "Z - A";
+                quizzes1 = quizzes.OrderByDescending(s => s.Quiz_Name).ToList();
+            }
+            if (page == null)
+            {
+                page = 1;
+            }
+            int pageSize = 9;
+            int pageNum = page ?? 1;
+            return View(quizzes1.ToPagedList(pageNum, pageSize));
+        }
+        public ActionResult CreateQ()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateQ(Quiz quiz)
+        {
+            try
+            {
+                if (quiz != null)
+                {
+                    Quiz quiz1 = new Quiz();
+                    quiz1.Quiz_Name = quiz.Quiz_Name;
+                    quiz1.Quiz_Content = quiz.Quiz_Content;
+                    quiz1.Quiz_AnswerOne = quiz.Quiz_AnswerOne;
+                    quiz1.Quiz_AnswerTwo = quiz.Quiz_AnswerTwo;
+                    quiz1.Quiz_AnswerThree = quiz.Quiz_AnswerThree;
+                    quiz1.Quiz_AnswerFour = quiz.Quiz_AnswerFour;
+                    quiz1.Quiz_AnswerFive = quiz.Quiz_AnswerFive;
+                    db.Quizs.Add(quiz1);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("ListQuiz", "Quiz");
+            }
+            catch
+            {
+                return HttpNotFound();
+            }
+        }
+        public ActionResult EditQ(int id)
+        {
+            Quiz quiz = db.Quizs.FirstOrDefault(s => s.Quiz_Code == id);
+            if(quiz != null)
+            {
+                return View(quiz);
+            }
+            return RedirectToAction("ListQuiz", "Quiz");
+        }
+        [HttpPost]
+        public ActionResult EditQ(Quiz quiz)
+        {
+            try
+            {
+                if (quiz != null)
+                {
+                    if(db.Quizs.FirstOrDefault(s => s.Quiz_Code == quiz.Quiz_Code) != null)
+                    {
+                        Quiz quiz1 = db.Quizs.FirstOrDefault(s => s.Quiz_Code == quiz.Quiz_Code);
+                        quiz1.Quiz_Name = quiz.Quiz_Name;
+                        quiz1.Quiz_Content = quiz.Quiz_Content;
+                        quiz1.Quiz_AnswerOne = quiz.Quiz_AnswerOne;
+                        quiz1.Quiz_AnswerTwo = quiz.Quiz_AnswerTwo;
+                        quiz1.Quiz_AnswerThree = quiz.Quiz_AnswerThree;
+                        quiz1.Quiz_AnswerFour = quiz.Quiz_AnswerFour;
+                        quiz1.Quiz_AnswerFive = quiz.Quiz_AnswerFive;
+                        db.Quizs.AddOrUpdate(quiz1);
+                        db.SaveChanges();
+                    }
+                }
+                return RedirectToAction("ListQuiz", "Quiz");
+            }
+            catch
+            {
+                return HttpNotFound();
+            }
+        }
+        public ActionResult DeleteQ(int id)
+        {
+            Quiz quiz = db.Quizs.FirstOrDefault(s => s.Quiz_Code == id);
+            if (quiz != null)
+            {
+                return View(quiz);
+            }
+            return RedirectToAction("ListQuiz", "Quiz");
+        }
+        [HttpPost]
+        public ActionResult DeleteQ(Quiz quiz)
+        {
+            Quiz quiz1 = db.Quizs.FirstOrDefault(s => s.Quiz_Code == quiz.Quiz_Code);
+            if (quiz != null)
+            {
+                db.Quizs.Remove(quiz1);
+                db.SaveChanges();
+            }
+            return RedirectToAction("ListQuiz", "Quiz");
+        }
     }
 }

@@ -11,7 +11,8 @@ namespace English_Learning_Website.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Test
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -22,8 +23,14 @@ namespace English_Learning_Website.Models
         }
     
         public int Test_Code { get; set; }
+        [Required(ErrorMessage = " Please enter test name ")]
+        [MaxLength(50)]
         public string Test_Name { get; set; }
+        [Required(ErrorMessage = " Please enter file path of test paragraph ")]
+        [MaxLength(50)]
         public string Test_Paragraph { get; set; }
+        [Required(ErrorMessage = " Please enter file path of test video ")]
+        [MaxLength(50)]
         public string Test_Video { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

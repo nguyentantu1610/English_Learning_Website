@@ -7,6 +7,7 @@ using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 using English_Learning_Website.Models;
+using PagedList;
 
 namespace English_Learning_Website.Controllers
 {
@@ -166,27 +167,29 @@ namespace English_Learning_Website.Controllers
                 From = fromGMail,
                 Subject = "Create Account Successful",
                 Body = "Dear " + userz.User_FullName.ToString() + ",\n"
-                + "Your answer :\n"
-                + questions[0].Question_Content +"\n"
-                + "Your choice : " + choice1 + "\n"
-                + questions[1].Question_Content + "\n"
-                + "Your choice : " + choice2 + "\n"
-                + questions[2].Question_Content + "\n"
-                + "Your choice : " + choice3 + "\n"
-                + questions[3].Question_Content + "\n"
-                + "Your choice : " + text1 + "\n"
-                + questions[4].Question_Content + "\n"
-                + "Your choice : " + text2 + "\n"
-                + questions[5].Question_Content + "\n"
-                + "Your choice : " + text3 + "\n"
-                + questions[6].Question_Content + "\n"
-                + "Your choice : " + choice4 + "\n"
-                + questions[7].Question_Content + "\n"
-                + "Your choice : " + choice5 + "\n"
-                + questions[8].Question_Content + "\n"
-                + "Your choice : " + choice6 + "\n"
-                + questions[9].Question_Content + "\n"
-                + "Your choice : " + choice7 + "\n"
+                + "Result : \n\n"
+                + "---------------------------------------------------"
+                + "Question 1 : " + questions[0].Question_Content +"\n"
+                + "Your answer : " + choice1 + "\n\n"
+                + "Question 2 : " + questions[1].Question_Content + "\n"
+                + "Your answer : " + choice2 + "\n\n"
+                + "Question 3 : " + questions[2].Question_Content + "\n"
+                + "Your answer : " + choice3 + "\n\n"
+                + "Question 4 : " + questions[3].Question_Content + "\n"
+                + "Your answer : " + text1 + "\n\n"
+                + "Question 5 : " + questions[4].Question_Content + "\n"
+                + "Your answer : " + text2 + "\n\n"
+                + "Question 6 : " + questions[5].Question_Content + "\n"
+                + "Your answer : " + text3 + "\n\n"
+                + "Question 7 : " + questions[6].Question_Content + "\n"
+                + "Your answer : " + choice4 + "\n\n"
+                + "Question 8 : " + questions[7].Question_Content + "\n"
+                + "Your answer : " + choice5 + "\n\n"
+                + "Question 9 : " + questions[8].Question_Content + "\n"
+                + "Your answer : " + choice6 + "\n\n"
+                + "Question 10 : " + questions[9].Question_Content + "\n"
+                + "Your answer : " + choice7 + "\n\n"
+                + "-----------------------------------------------------"
                 + "Your Score : " + test_Score + "\n\n"
                 + "We wish you have fun and progess in your studies,\n" 
                 + "HKT2",
@@ -213,6 +216,88 @@ namespace English_Learning_Website.Controllers
         public ActionResult Result_Test()
         {
             return View();
+        }
+        public ActionResult ListTest(int? page, string searchTest, string sortTest)
+        {
+            List<Test> tests = new List<Test>();
+            if (searchTest != null)
+            {
+                Session["searchTest"] = searchTest;
+                tests = db.Tests.Where(s => s.Test_Name.Contains(searchTest.Trim().ToLower())).ToList();
+            }
+            else
+            {
+                Session["searchTest"] = null;
+                tests = db.Tests.ToList();
+            }
+            List<Test> tests1;
+            if (sortTest == null || sortTest == "None")
+            {
+                Session["sortTest"] = "None";
+                tests1 = tests;
+            }
+            else if (sortTest == "AZ")
+            {
+                Session["sortTest"] = "A - Z";
+                tests1 = tests.OrderBy(s => s.Test_Name).ToList();
+            }
+            else
+            {
+                Session["sortTest"] = "Z - A";
+                tests1 = tests.OrderByDescending(s => s.Test_Name).ToList();
+            }
+            if (page == null)
+            {
+                page = 1;
+            }
+            int pageSize = 9;
+            int pageNum = page ?? 1;
+            return View(tests1.ToPagedList(pageNum, pageSize));
+        }
+        public ActionResult CreateT()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult CreateT(Test test)
+        {
+            if(test != null)
+            {
+
+                    
+
+                    Test test1 = new Test();
+                    test1.Test_Name = test.Test_Name;
+                    test1.Test_Paragraph = test.Test_Paragraph;
+                    test1.Test_Video = test.Test_Video;
+                    db.Tests.Add(test1);
+                    db.SaveChanges();
+
+            }
+            return RedirectToAction("ListTest","Test");
+        }
+        public ActionResult EditQ(int id)
+        {
+            Test test = db.Tests.FirstOrDefault(s => s.Test_Code == id);
+            if(test != null)
+            {
+                return View(test);
+            }
+            return RedirectToAction("ListTest", "Test");
+        }
+        [HttpPost]
+        public ActionResult EditQ(Test test)
+        {
+            Test test1 = db.Tests.FirstOrDefault(s => s.Test_Code == test.Test_Code);
+            if(test != null)
+            {
+                test1.Test_Name = test.Test_Name;
+                test1.Test_Paragraph = test.Test_Paragraph;
+                test1.Test_Video = test.Test_Video;
+                db.Tests.AddOrUpdate(test1);
+                db.SaveChanges();
+            }
+            return RedirectToAction("ListTest", "Test");
         }
     }
 }

@@ -14,14 +14,42 @@ namespace English_Learning_Website.Controllers
     {
         // GET: Story
         English_Learning_WebsiteEntities1 db = new English_Learning_WebsiteEntities1();
-        public ActionResult ListStory(int? page)
+        public ActionResult ListStory(int? page, string searchStory1, string sortStory1)
         {
-            if (page == null) page = 1;
-            int pageSize = 9;
-            int pageNum = page ?? 1;
-            List<Story> story = db.Stories.ToList();
+            List<Story> stories = new List<Story>();
+            if (searchStory1 != null)
+            {
+                Session["searchStory1"] = searchStory1;
+                stories = db.Stories.Where(s => s.Story_Name.Contains(searchStory1.Trim().ToLower())).ToList();
+            }
+            else
+            {
+                Session["searchStory1"] = null;
+                stories = db.Stories.ToList();
+            }
+            List<Story> stories1;
+            if (sortStory1 == null || sortStory1 == "None")
+            {
+                Session["sortStory1"] = "None";
+                stories1 = stories;
+            }
+            else if (sortStory1 == "AZ")
+            {
+                Session["sortStory1"] = "A - Z";
+                stories1 = stories.OrderBy(s => s.Story_Name).ToList();
+            }
+            else if (sortStory1 == "ZA")
+            {
+                Session["sortStory"] = "Z - A";
+                stories1 = stories.OrderByDescending(s => s.Story_Name).ToList();
+            }
+            else
+            {
+                Session["sortStory1"] = "View";
+                stories1 = stories.OrderBy(s => s.Story_View).ToList();
+            }
             List<StoryBonus> storyBonus = new List<StoryBonus>();
-            foreach (Story item in story)
+            foreach (Story item in stories1)
             {
                 StoryBonus storyBonus1 = new StoryBonus();
                 storyBonus1.Story_Code = item.Story_Code;
@@ -31,6 +59,12 @@ namespace English_Learning_Website.Controllers
                 storyBonus1.Userz_FullName = userz.User_FullName;
                 storyBonus.Add(storyBonus1);
             }
+            if (page == null)
+            {
+                page = 1;
+            }
+            int pageSize = 9;
+            int pageNum = page ?? 1;
             return View(storyBonus.ToPagedList(pageNum, pageSize));
         }
         public ActionResult CreateS()
@@ -43,31 +77,34 @@ namespace English_Learning_Website.Controllers
         {
             try
             {
-                Story story1 = new Story();
-                if (story.Story_banner != null)
+                if(story != null)
                 {
-                    story1.Story_banner = story.Story_banner;
+                    Story story1 = new Story();
+                    if (story.Story_banner != null)
+                    {
+                        story1.Story_banner = story.Story_banner;
+                    }
+                    else
+                    {
+                        story1.Story_banner = "1478594.png";
+                    }
+                    if (story.Story_image != null)
+                    {
+                        story1.Story_image = story.Story_image;
+                    }
+                    else
+                    {
+                        story1.Story_image = "1478594.png";
+                    }
+                    story1.Story_Name = story.Story_Name;
+                    story1.Story_Content_EN = story.Story_Content_EN;
+                    story1.Story_Content_VN = story.Story_Content_VN;
+                    story1.Story_Audio = story.Story_Audio;
+                    story1.Userz_Code = story.Userz_Code;
+                    story1.Story_View = 0;
+                    db.Stories.Add(story1);
+                    db.SaveChanges();
                 }
-                else
-                {
-                    story1.Story_banner = "1478594.png";
-                }
-                if (story.Story_image != null)
-                {
-                    story1.Story_image = story.Story_image;
-                }
-                else
-                {
-                    story1.Story_image = "1478594.png";
-                }
-                story1.Story_Name = story.Story_Name;
-                story1.Story_Content_EN = story.Story_Content_EN;
-                story1.Story_Content_VN = story.Story_Content_VN;
-                story1.Story_Audio = story.Story_Audio;
-                story1.Userz_Code = story.Userz_Code;
-                story1.Story_View = 0;
-                db.Stories.AddOrUpdate(story1);
-                db.SaveChanges();
                 return RedirectToAction("ListStory", "Story");
             }
             catch
@@ -78,16 +115,20 @@ namespace English_Learning_Website.Controllers
         public ActionResult EditS(int id)
         {
             Story story = db.Stories.FirstOrDefault(s => s.Story_Code == id);
-            StoryBonus storyBonus = new StoryBonus();
-            storyBonus.Story_Code = story.Story_Code;
-            storyBonus.Story_banner = story.Story_banner;
-            storyBonus.Story_image = story.Story_image;
-            storyBonus.Story_Name = story.Story_Name;
-            storyBonus.Story_Content_EN = story.Story_Content_EN;
-            storyBonus.Story_Content_VN = story.Story_Content_VN;
-            storyBonus.Story_Audio = story.Story_Audio;
-            storyBonus.Userz_Code = story.Userz.User_Code;
-            return View(storyBonus);
+           if(story != null)
+            {
+                StoryBonus storyBonus = new StoryBonus();
+                storyBonus.Story_Code = story.Story_Code;
+                storyBonus.Story_banner = story.Story_banner;
+                storyBonus.Story_image = story.Story_image;
+                storyBonus.Story_Name = story.Story_Name;
+                storyBonus.Story_Content_EN = story.Story_Content_EN;
+                storyBonus.Story_Content_VN = story.Story_Content_VN;
+                storyBonus.Story_Audio = story.Story_Audio;
+                storyBonus.Userz_Code = story.Userz.User_Code;
+                return View(storyBonus);
+            }
+            return RedirectToAction("ListStory", "Story");
         }
         [HttpPost]
         public ActionResult EditS(StoryBonus storyBonus)
@@ -95,14 +136,17 @@ namespace English_Learning_Website.Controllers
             try
             {
                 Story story = db.Stories.FirstOrDefault(s => s.Story_Code == storyBonus.Story_Code);
-                story.Story_banner = storyBonus.Story_banner;
-                story.Story_image = storyBonus.Story_image;
-                story.Story_Name = storyBonus.Story_Name;
-                story.Story_Content_EN = storyBonus.Story_Content_EN;
-                story.Story_Content_VN = storyBonus.Story_Content_VN;
-                story.Story_Audio = storyBonus.Story_Audio;
-                db.Stories.AddOrUpdate(story);
-                db.SaveChanges();
+                if(story != null)
+                {
+                    story.Story_banner = storyBonus.Story_banner;
+                    story.Story_image = storyBonus.Story_image;
+                    story.Story_Name = storyBonus.Story_Name;
+                    story.Story_Content_EN = storyBonus.Story_Content_EN;
+                    story.Story_Content_VN = storyBonus.Story_Content_VN;
+                    story.Story_Audio = storyBonus.Story_Audio;
+                    db.Stories.AddOrUpdate(story);
+                    db.SaveChanges();
+                }
                 return RedirectToAction("ListStory", "Story");
             }
             catch
@@ -125,14 +169,28 @@ namespace English_Learning_Website.Controllers
         public ActionResult DeleteS(int id)
         {
             Story story = db.Stories.FirstOrDefault(s => s.Story_Code == id);
-            return View(story);
+            if(story != null)
+            {
+                return View(story);
+            }
+            return RedirectToAction("ListStory", "Story");
         }
         public ActionResult DeleteSS(int id)
         {
-            Story story = db.Stories.FirstOrDefault(s => s.Story_Code == id);
-            db.Stories.Remove(story);
-            db.SaveChanges();
-            return RedirectToAction("ListStory", "Story");
+            try
+            {
+                Story story = db.Stories.FirstOrDefault(s => s.Story_Code == id);
+                if (story != null)
+                {
+                    db.Stories.Remove(story);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("ListStory", "Story");
+            }
+            catch
+            {
+                return HttpNotFound();
+            }
         }
         public string ProcessUpload(HttpPostedFileBase file)
         {

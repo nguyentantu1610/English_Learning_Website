@@ -20,18 +20,28 @@ namespace English_Learning_Website.Controllers
         //List Vocabulary
         public ActionResult ListVocabularyType()
         {
-            List<Vocabulary_Type> vocabulary_Type = db.Vocabulary_Type.ToList();
+            List<Vocabulary_Type> vocabulary_Type = db.Vocabulary_Type.Where(s => s.Vocabulary_Type_Code != 6).ToList();
             Vocabulary_TypeBonus vocabular_TypeBonus = new Vocabulary_TypeBonus();
             vocabular_TypeBonus.vocabulary_Types = vocabulary_Type;
             return View(vocabular_TypeBonus);
         }
         public ActionResult DeleteVT(int id)
         {
-            Vocabulary_Type vocabulary_Type = db.Vocabulary_Type.FirstOrDefault(s => s.Vocabulary_Type_Code == id);
-            db.Vocabulary_Type.Remove(vocabulary_Type);
-            db.SaveChanges();
-            List<Vocabulary_Type> vocabulary_Type1 = db.Vocabulary_Type.ToList();
-            return RedirectToAction("ListVocabularyType");
+            try
+            {
+                Vocabulary_Type vocabulary_Type = db.Vocabulary_Type.FirstOrDefault(s => s.Vocabulary_Type_Code == id);
+                if(vocabulary_Type != null)
+                {
+                    db.Vocabulary_Type.Remove(vocabulary_Type);
+                    db.SaveChanges();
+                    List<Vocabulary_Type> vocabulary_Type1 = db.Vocabulary_Type.ToList();
+                }
+                return RedirectToAction("ListVocabularyType");
+            }
+            catch
+            {
+                return HttpNotFound();
+            }
         }
         public ActionResult EditVT(int id)
         {
@@ -97,13 +107,42 @@ namespace English_Learning_Website.Controllers
                 return HttpNotFound();
             }
         }
-        public ActionResult ListVocabulary(int? page)
+        public ActionResult ListVocabulary(int? page, string searchVocabulary1, string sortVocabulary1)
         {
-            if (page == null) page = 1;
+            List<Vocabulary> vocabularies = new List<Vocabulary>();
+            if (searchVocabulary1 != null)
+            {
+                Session["searchVocabulary1"] = searchVocabulary1;
+                vocabularies = db.Vocabularies.Where(s => s.Vocabulary_English.Contains(searchVocabulary1.Trim().ToLower())).ToList();
+            }
+            else
+            {
+                Session["searchVocabulary1"] = null;
+                vocabularies = db.Vocabularies.ToList();
+            }
+            List<Vocabulary> vocabularies1;
+            if (sortVocabulary1 == null || sortVocabulary1 == "None")
+            {
+                Session["Vocabulary_Sort1"] = "None";
+                vocabularies1 = vocabularies;
+            }
+            else if (sortVocabulary1 == "AZ")
+            {
+                Session["Vocabulary_Sort1"] = "A - Z";
+                vocabularies1 = vocabularies.OrderBy(s => s.Vocabulary_English).ToList();
+            }
+            else
+            {
+                Session["Vocabulary_Sort1"] = "Z - A";
+                vocabularies1 = vocabularies.OrderByDescending(s => s.Vocabulary_English).ToList();
+            }
+            if (page == null)
+            {
+                page = 1;
+            }
             int pageSize = 9;
             int pageNum = page ?? 1;
-            List<Vocabulary> vocabularies = db.Vocabularies.ToList();
-            return View(vocabularies.ToPagedList(pageNum, pageSize));
+            return View(vocabularies1.ToPagedList(pageNum, pageSize));
         }
         public ActionResult DetailV(int id)
         {
@@ -132,10 +171,20 @@ namespace English_Learning_Website.Controllers
         }
         public ActionResult DeleteVC(int id)
         {
-            Vocabulary vocabulary = db.Vocabularies.FirstOrDefault(s => s.Vocabulary_Code == id);
-            db.Vocabularies.Remove(vocabulary);
-            db.SaveChanges();
-            return RedirectToAction("ListVocabulary");
+            try
+            {
+                Vocabulary vocabulary = db.Vocabularies.FirstOrDefault(s => s.Vocabulary_Code == id);
+                if(vocabulary != null)
+                {
+                    db.Vocabularies.Remove(vocabulary);
+                    db.SaveChanges();
+                }
+                return RedirectToAction("ListVocabulary");
+            }
+            catch
+            {
+                return HttpNotFound();
+            }
         }
         public ActionResult CreateV()
         {
@@ -168,7 +217,7 @@ namespace English_Learning_Website.Controllers
                     db.SaveChanges();
                     return RedirectToAction("ListVocabulary", "Vocabulary");
                 }
-                return View(vocabularyBonus);
+                return this.CreateV();
             }
             catch
             {
@@ -234,7 +283,7 @@ namespace English_Learning_Website.Controllers
         }
         public ActionResult User_View(int? id, int? page, string searchVocabulary, string sortVocabulary)
         {
-            List<Vocabulary_Type> vocabulary_Types = db.Vocabulary_Type.ToList();
+            List<Vocabulary_Type> vocabulary_Types = db.Vocabulary_Type.Where(s => s.Vocabulary_Type_Code != 6).ToList();
             Session["Index"] = vocabulary_Types;
             List<Vocabulary> vocabularies = new List<Vocabulary>();
             if (searchVocabulary != null)

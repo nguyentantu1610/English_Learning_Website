@@ -11,7 +11,9 @@ namespace English_Learning_Website.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel;
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Quiz
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,12 +23,26 @@ namespace English_Learning_Website.Models
         }
     
         public int Quiz_Code { get; set; }
+        [Required(ErrorMessage = " Please enter quiz name ")]
+        [MaxLength(50)]
         public string Quiz_Name { get; set; }
+        [Required(ErrorMessage = " Please enter file path of quiz content ")]
+        [MaxLength(50)]
         public string Quiz_Content { get; set; }
+        [Required(ErrorMessage = " Please enter quiz answer one ")]
+        [MaxLength(50)]
         public string Quiz_AnswerOne { get; set; }
+        [Required(ErrorMessage = " Please enter quiz answer two ")]
+        [MaxLength(50)]
         public string Quiz_AnswerTwo { get; set; }
+        [Required(ErrorMessage = " Please enter quiz answer three ")]
+        [MaxLength(50)]
         public string Quiz_AnswerThree { get; set; }
+        [Required(ErrorMessage = " Please enter quiz answer four ")]
+        [MaxLength(50)]
         public string Quiz_AnswerFour { get; set; }
+        [Required(ErrorMessage = " Please enter quiz answer five ")]
+        [MaxLength(50)]
         public string Quiz_AnswerFive { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

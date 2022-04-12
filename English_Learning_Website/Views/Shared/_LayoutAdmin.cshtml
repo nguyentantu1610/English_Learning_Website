@@ -64,13 +64,15 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="dropdown">
-                        <a href="javascript:void(0)" class="dropbtn">Vocabulary</a>
+                        <a href="javascript:void(0)" class="dropbtn">Vocabulary Manager</a>
                         <div class="dropdown-content">
                             <a href="/Vocabulary/ListVocabulary">Vocabulary List</a>
                             <a href="/Vocabulary/ListVocabularyType">Categories List</a>
                         </div>
                     </li>
-                    <li>@Html.ActionLink("Story", "ListStory", "Story")</li>
+                    <li>@Html.ActionLink("Story Manager", "ListStory", "Story")</li>
+                    <li>@Html.ActionLink("Quiz Manager", "ListQuiz", "Quiz")</li>
+                    <li>@Html.ActionLink("Test Manager", "ListTest", "Test")</li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li><img src="~/Content/images/@Session["User_Image"]" class="avatar" /></li>

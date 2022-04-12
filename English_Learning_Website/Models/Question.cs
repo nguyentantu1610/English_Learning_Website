@@ -11,17 +11,34 @@ namespace English_Learning_Website.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Question
     {
         public int Question_Code { get; set; }
+        [Required(ErrorMessage = " Please enter question content ")]
+        [MaxLength(50)]
         public string Question_Content { get; set; }
+        [Required(ErrorMessage = " Please enter question type ")]
+        [MaxLength(50)]
         public string Question_Type { get; set; }
+        [Required(ErrorMessage = " Please enter answer content 1 ")]
+        [MaxLength(50)]
         public string Answer_Content1 { get; set; }
+        [Required(ErrorMessage = " Please enter answer content 2 ")]
+        [MaxLength(50)]
         public string Answer_Content2 { get; set; }
+        [Required(ErrorMessage = " Please enter answer content 3 ")]
+        [MaxLength(50)]
         public string Answer_Content3 { get; set; }
+        [Required(ErrorMessage = " Please enter answer content 4 ")]
+        [MaxLength(50)]
         public string Answer_Content4 { get; set; }
+        [Required(ErrorMessage = " Please enter the correct answer ")]
+        [MaxLength(50)]
         public string Answer_Correct { get; set; }
+        [Required(ErrorMessage = " Please enter test code ")]
+        [MaxLength(50)]
         public Nullable<int> Test_Code { get; set; }
     
         public virtual Test Test { get; set; }

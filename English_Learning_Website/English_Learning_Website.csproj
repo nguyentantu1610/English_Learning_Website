@@ -424,6 +424,13 @@
     <Content Include="Views\Test\Choose_Test.cshtml" />
     <Content Include="Views\Test\Do_Test.cshtml" />
     <Content Include="Views\Test\Result_Test.cshtml" />
+    <Content Include="Views\Quiz\ListQuiz.cshtml" />
+    <Content Include="Views\Quiz\CreateQ.cshtml" />
+    <Content Include="Views\Quiz\EditQ.cshtml" />
+    <Content Include="Views\Quiz\DeleteQ.cshtml" />
+    <Content Include="Views\Test\ListTest.cshtml" />
+    <Content Include="Views\Test\CreateT.cshtml" />
+    <Content Include="Views\Test\EditQ.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
